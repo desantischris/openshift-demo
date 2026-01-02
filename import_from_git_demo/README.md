@@ -15,10 +15,12 @@ This project demonstrates deploying the Spring PetClinic Java application using 
    - Select **Import from Git**.
    - **(Optional but recommended)** Fork the repo https://github.com/siamaksade/spring-petclinic to your GitHub account.
    - Ensure **Resource type** is set to **Deployment** and **Create a route to the application** is checked, then click **Create**.
+
 ![1. Import from Git](3-openshift-git-import-demo-1.png)
 
 2. The application appears in the Topology view. Click the app icon.
    - In the side panel, confirm the Scale control is set to 1; if it shows 0, increase it to 1 so one pod is always maintained.
+
 ![2. View App](3-openshift-git-import-demo-2.png)
 ![2-2. View App pod scaling](3-openshift-git-import-demo-2-2.png)
 
@@ -32,16 +34,21 @@ This project demonstrates deploying the Spring PetClinic Java application using 
    - The health checks now govern readiness and restarts.
 
 5. Open the linked Route for spring-petclinic to verify the Spring PetClinic UI is accessible in the browser.
+
 ![3. View Route](3-openshift-git-import-demo-3.png)
 
 6. Modify the value of the `welcome` property in the file `spring-petclinic/src/main/resources/messages/messages.properties`.
+
 ![4. Welcome message](3-openshift-git-import-demo-4.png)
 
 7. In the app properties window, kick off another build.
+
 ![5. New Build](3-openshift-git-import-demo-5.png)
 
 8. When the build completes, restart the rollout.
+
 ![6. Restart rollout](3-openshift-git-import-demo-6.png)
 
 9. When a new pod is deployed and started, and the previous pod terminated, view the route. Observe the updated welcome message.
+
 ![7. View route again](3-openshift-git-import-demo-7.png)
