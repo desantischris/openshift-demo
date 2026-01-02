@@ -91,13 +91,13 @@ spec:
 
 ![1. Creating from YAML import](1-yaml-upload-demo-1.png)
 
-2. The app, service, and route are created and a build is initiated.
+2. The app, service, and route are created.
     - Navigate to **Workloads > Topology** and view the new app
   
 ![2. View created app](1-yaml-upload-demo-2.png)
 
 3. After a few minutes, click the **Route** link in the app properties window.
     - View the Nginx web server welcome page
-    - Note: clicking the link too early may generate an error as the backend pods were not yet running and the service endpoints may not exist. The page may cache and not load even when the pods are online and service endpoints exist. A hard refresh may clear the issue. The command ```curl http://nginx-yaml-service:8080/``` can be run inside the pod terminal to determine if the Nginx route is available.
+    - Note: Clicking the Route link too early may show an error as the backend pods are not yet ready and Service endpoints don't exist yet. The page may cache and not load even when the pods are online and service endpoints exist. A hard refresh may clear the issue. The command ```curl http://nginx-yaml-service:8080/``` can be run inside the pod terminal to determine if the Nginx route is available.
   
 ![3. Nginx Start](1-yaml-upload-demo-3.png)
