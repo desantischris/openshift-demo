@@ -1,0 +1,60 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: nginx-yaml-route
+  namespace: desantischris-dev
+  uid: 6d7b656e-33e6-4589-b85b-0fc05e711d94
+  resourceVersion: '6971793608'
+  creationTimestamp: '2025-12-30T01:21:56Z'
+  labels:
+    app: nginx-yaml
+  annotations:
+    openshift.io/host.generated: 'true'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: route.openshift.io/v1
+      time: '2025-12-30T01:21:56Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:app': {}
+        'f:spec':
+          'f:port':
+            .: {}
+            'f:targetPort': {}
+          'f:to':
+            'f:kind': {}
+            'f:name': {}
+            'f:weight': {}
+          'f:wildcardPolicy': {}
+    - manager: openshift-router
+      operation: Update
+      apiVersion: route.openshift.io/v1
+      time: '2025-12-30T01:21:56Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:ingress': {}
+      subresource: status
+spec:
+  host: nginx-yaml-route-desantischris-dev.apps.rm3.7wse.p1.openshiftapps.com
+  to:
+    kind: Service
+    name: nginx-yaml-service
+    weight: 100
+  port:
+    targetPort: http
+  wildcardPolicy: None
+status:
+  ingress:
+    - host: nginx-yaml-route-desantischris-dev.apps.rm3.7wse.p1.openshiftapps.com
+      routerName: default
+      conditions:
+        - type: Admitted
+          status: 'True'
+          lastTransitionTime: '2025-12-30T01:21:56Z'
+      wildcardPolicy: None
+      routerCanonicalHostname: router-default.apps.rm3.7wse.p1.openshiftapps.com
