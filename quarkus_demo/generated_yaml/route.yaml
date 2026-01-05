@@ -1,0 +1,87 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: code-with-quarkus-demo
+  namespace: desantischris-dev
+  uid: 49952c19-bcf9-4e36-9dd5-17cb2a7f3a35
+  resourceVersion: '6951007717'
+  creationTimestamp: '2025-12-26T20:19:18Z'
+  labels:
+    app: code-with-quarkus-demo
+    app.kubernetes.io/component: code-with-quarkus-demo
+    app.kubernetes.io/instance: code-with-quarkus-demo
+    app.kubernetes.io/name: code-with-quarkus-demo
+    app.kubernetes.io/part-of: sample-app
+    app.openshift.io/runtime: quarkus
+  annotations:
+    app.openshift.io/vcs-ref: ''
+    app.openshift.io/vcs-uri: 'https://github.com/devfile-samples/devfile-sample-code-with-quarkus.git'
+    isFromDevfile: 'true'
+    openshift.io/generated-by: OpenShiftWebConsole
+    openshift.io/host.generated: 'true'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: route.openshift.io/v1
+      time: '2025-12-26T20:19:18Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:app.openshift.io/vcs-ref': {}
+            'f:app.openshift.io/vcs-uri': {}
+            'f:isFromDevfile': {}
+            'f:openshift.io/generated-by': {}
+          'f:labels':
+            .: {}
+            'f:app': {}
+            'f:app.kubernetes.io/component': {}
+            'f:app.kubernetes.io/instance': {}
+            'f:app.kubernetes.io/name': {}
+            'f:app.kubernetes.io/part-of': {}
+            'f:app.openshift.io/runtime': {}
+        'f:spec':
+          'f:port':
+            .: {}
+            'f:targetPort': {}
+          'f:tls':
+            .: {}
+            'f:insecureEdgeTerminationPolicy': {}
+            'f:termination': {}
+          'f:to':
+            'f:kind': {}
+            'f:name': {}
+            'f:weight': {}
+          'f:wildcardPolicy': {}
+    - manager: openshift-router
+      operation: Update
+      apiVersion: route.openshift.io/v1
+      time: '2025-12-26T20:19:18Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:ingress': {}
+      subresource: status
+spec:
+  host: code-with-quarkus-demo-desantischris-dev.apps.rm3.7wse.p1.openshiftapps.com
+  to:
+    kind: Service
+    name: code-with-quarkus-demo
+    weight: 100
+  port:
+    targetPort: '8081'
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
+status:
+  ingress:
+    - host: code-with-quarkus-demo-desantischris-dev.apps.rm3.7wse.p1.openshiftapps.com
+      routerName: default
+      conditions:
+        - type: Admitted
+          status: 'True'
+          lastTransitionTime: '2025-12-26T20:19:18Z'
+      wildcardPolicy: None
+      routerCanonicalHostname: router-default.apps.rm3.7wse.p1.openshiftapps.com
