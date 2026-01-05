@@ -1,15 +1,18 @@
 # Deploying & Managing a Quarkus Application on Red Hat OpenShift
 
-Hands-on experience using the free Red Hat Developer Sandbox (OpenShift 4.20).
+Hands-on experience using the **Red Hat Developer Sandbox** (OpenShift 4.20).
 
 ## Overview
-In this tutorial, the user will:
-1. Deploy sample Quarkus app via the console catalog.
-2. Add readiness/liveness health checks to ensure stability.
-3. Expose the app publicly with a Route.
-4. Manually scaled replicas from 1 → 3 to demonstrate horizontal scaling and self-healing.
-5. Trigger a new source-to-image build and verify a rolling update across all pods.
-6, Monitor the app via the Observe tab.
+
+This demo shows a realistic developer workflow: rapid deployment of a Quarkus application using the OpenShift **Developer Console Catalog**, followed by production hardening and management.
+
+1. Developer Console → **+Add** → **From Catalog** → Selected the Quarkus sample template.
+2. OpenShift instantly created and deployed the app with a Deployment, Service, and Route.
+3. Added **readiness** and **liveness** health checks via the UI prompt (using Quarkus built-in `/q/health/ready` and `/q/health/live` endpoints on port 8080).
+4. Manually scaled replicas to demonstrate horizontal scaling and self-healing.
+5. Triggered a new source-to-image build and verified a rolling update across all pods.
+6. **Exported the generated Deployment YAML** to show the underlying OpenShift resources and added health checks (see `/generated-yaml/...`).
+7. Monitored the app via the built-in **Observe** tab (metrics, logs, events).
 
 ## Steps
 1. In the Red Hat Developer Sandbox (https://sandbox.redhat.com/), select **Openshift**.
