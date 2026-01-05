@@ -2,12 +2,15 @@
 
 This project demonstrates deploying the Spring PetClinic Java application using the **Import from Git** feature in the OpenShift web console.
 
-#### Key Features & Learnings
+## Key Features & Learnings
 - **UI-driven workflow**: Everything is created and managed from the OpenShift web console (Developer perspective) without needing CLI commands.
 - **Stable scaling**: The Deployment is kept at 1 replica via the Topology scale control so a runtime pod always exists and automatically recreates after failures.
 - **Health checks**: Readiness and liveness probes on port 8080 (path `/`) are configured so OpenShift waits for Spring Boot to start and restarts unhealthy pods.
 - **Public exposure**: A Service and Route are created so the PetClinic UI is reachable externally over HTTPS.
 - **Full DevOps cycle**: Modified the Java app, committed and pushed the change, triggered a new build and rollout, and verified the change in the running application.
+
+## Generated YAML
+Exported after adding health checks: [generated_yaml/](generated_yaml/)
 
 #### Steps
 
