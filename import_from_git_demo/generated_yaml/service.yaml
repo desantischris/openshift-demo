@@ -1,0 +1,53 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-yaml-service
+  namespace: desantischris-dev
+  uid: 7f2d8b3c-62c0-4698-8ddb-e171260db773
+  resourceVersion: '6971793586'
+  creationTimestamp: '2025-12-30T01:21:56Z'
+  labels:
+    app: nginx-yaml
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: v1
+      time: '2025-12-30T01:21:56Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:app': {}
+        'f:spec':
+          'f:internalTrafficPolicy': {}
+          'f:ports':
+            .: {}
+            'k:{"port":8080,"protocol":"TCP"}':
+              .: {}
+              'f:name': {}
+              'f:port': {}
+              'f:protocol': {}
+              'f:targetPort': {}
+          'f:selector': {}
+          'f:sessionAffinity': {}
+          'f:type': {}
+spec:
+  clusterIP: 172.30.252.53
+  ipFamilies:
+    - IPv4
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  internalTrafficPolicy: Cluster
+  clusterIPs:
+    - 172.30.252.53
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: nginx-yaml
+status:
+  loadBalancer: {}
