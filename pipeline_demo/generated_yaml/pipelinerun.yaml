@@ -1,0 +1,780 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  annotations:
+    pipeline.openshift.io/started-by: desantischris
+    results.tekton.dev/record: desantischris-dev/results/db1e084d-7cce-48d8-8ec8-e1a481225220/records/db1e084d-7cce-48d8-8ec8-e1a481225220
+    results.tekton.dev/result: desantischris-dev/results/db1e084d-7cce-48d8-8ec8-e1a481225220
+    results.tekton.dev/stored: 'true'
+  resourceVersion: '7048231811'
+  name: golang-ex-demo-qfpi7g
+  uid: db1e084d-7cce-48d8-8ec8-e1a481225220
+  creationTimestamp: '2026-01-10T00:39:35Z'
+  generation: 1
+  managedFields:
+    - apiVersion: tekton.dev/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:pipeline.openshift.io/started-by': {}
+          'f:labels':
+            .: {}
+            'f:app.kubernetes.io/instance': {}
+            'f:app.kubernetes.io/name': {}
+            'f:operator.tekton.dev/operand-name': {}
+            'f:pipeline.openshift.io/runtime': {}
+            'f:pipeline.openshift.io/runtime-version': {}
+            'f:pipeline.openshift.io/type': {}
+            'f:tekton.dev/pipeline': {}
+        'f:spec':
+          .: {}
+          'f:params': {}
+          'f:pipelineRef':
+            .: {}
+            'f:name': {}
+          'f:taskRunTemplate':
+            .: {}
+            'f:serviceAccountName': {}
+          'f:timeouts':
+            .: {}
+            'f:pipeline': {}
+          'f:workspaces': {}
+      manager: Mozilla
+      operation: Update
+      time: '2026-01-10T00:39:35Z'
+    - apiVersion: tekton.dev/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          .: {}
+          'f:childReferences': {}
+          'f:completionTime': {}
+          'f:conditions': {}
+          'f:pipelineSpec':
+            .: {}
+            'f:params': {}
+            'f:tasks': {}
+            'f:workspaces': {}
+          'f:provenance':
+            .: {}
+            'f:featureFlags':
+              'f:verificationNoMatchPolicy': {}
+              'f:runningInEnvWithInjectedSidecars': {}
+              .: {}
+              'f:maxResultSize': {}
+              'f:awaitSidecarReadiness': {}
+              'f:enableProvenanceInStatus': {}
+              'f:coschedule': {}
+              'f:resultExtractionMethod': {}
+              'f:enableAPIFields': {}
+              'f:enforceNonfalsifiability': {}
+          'f:startTime': {}
+      manager: controller
+      operation: Update
+      subresource: status
+      time: '2026-01-10T00:41:03Z'
+    - apiVersion: tekton.dev/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:results.tekton.dev/record': {}
+            'f:results.tekton.dev/result': {}
+            'f:results.tekton.dev/stored': {}
+          'f:finalizers':
+            .: {}
+            'v:"results.tekton.dev/pipelinerun"': {}
+      manager: openshift-pipelines-results-watcher
+      operation: Update
+      time: '2026-01-10T00:41:07Z'
+  namespace: desantischris-dev
+  finalizers:
+    - results.tekton.dev/pipelinerun
+  labels:
+    app.kubernetes.io/instance: golang-ex-demo
+    app.kubernetes.io/name: golang-ex-demo
+    operator.tekton.dev/operand-name: openshift-pipelines-addons
+    pipeline.openshift.io/runtime: golang
+    pipeline.openshift.io/runtime-version: 1.18-ubi7
+    pipeline.openshift.io/type: knative
+    tekton.dev/pipeline: golang-ex-demo
+spec:
+  params:
+    - name: APP_NAME
+      value: golang-ex-demo
+    - name: GIT_REPO
+      value: 'https://github.com/desantischris/golang-ex'
+    - name: GIT_REVISION
+      value: master
+    - name: IMAGE_NAME
+      value: 'image-registry.openshift-image-registry.svc:5000/desantischris-dev/golang-ex-demo'
+    - name: PATH_CONTEXT
+      value: .
+    - name: VERSION
+      value: 1.18-ubi7
+  pipelineRef:
+    name: golang-ex-demo
+  taskRunTemplate:
+    serviceAccountName: pipeline
+  timeouts:
+    pipeline: 1h0m0s
+  workspaces:
+    - name: workspace
+      persistentVolumeClaim:
+        claimName: pvc-3d513b2fad
+status:
+  childReferences:
+    - apiVersion: tekton.dev/v1
+      kind: TaskRun
+      name: golang-ex-demo-qfpi7g-fetch-repository
+      pipelineTaskName: fetch-repository
+    - apiVersion: tekton.dev/v1
+      kind: TaskRun
+      name: golang-ex-demo-qfpi7g-build
+      pipelineTaskName: build
+    - apiVersion: tekton.dev/v1
+      kind: TaskRun
+      name: golang-ex-demo-qfpi7g-kn-service-apply
+      pipelineTaskName: kn-service-apply
+  completionTime: '2026-01-10T00:41:03Z'
+  conditions:
+    - lastTransitionTime: '2026-01-10T00:41:03Z'
+      message: 'Tasks Completed: 3 (Failed: 0, Cancelled 0), Skipped: 0'
+      reason: Succeeded
+      status: 'True'
+      type: Succeeded
+  pipelineSpec:
+    params:
+      - default: golang-ex-demo
+        name: APP_NAME
+        type: string
+      - default: 'https://github.com/desantischris/golang-ex'
+        name: GIT_REPO
+        type: string
+      - default: master
+        name: GIT_REVISION
+        type: string
+      - default: 'image-registry.openshift-image-registry.svc:5000/desantischris-dev/golang-ex-demo'
+        name: IMAGE_NAME
+        type: string
+      - default: .
+        name: PATH_CONTEXT
+        type: string
+      - default: 1.18-ubi7
+        name: VERSION
+        type: string
+    tasks:
+      - name: fetch-repository
+        params:
+          - name: URL
+            value: 'https://github.com/desantischris/golang-ex'
+          - name: REVISION
+            value: master
+          - name: SUBDIRECTORY
+            value: ''
+          - name: DELETE_EXISTING
+            value: 'true'
+        taskRef:
+          params:
+            - name: kind
+              value: task
+            - name: name
+              value: git-clone
+            - name: namespace
+              value: openshift-pipelines
+          resolver: cluster
+        workspaces:
+          - name: output
+            workspace: workspace
+        status:
+          taskSpec:
+            description: |
+              This object represents Git and is able to initialize and clone a remote repository on the informed Workspace. It's likely to become the first `step` on a Pipeline. 
+            params:
+              - default: ca-bundle.crt
+                description: |
+                  Certificate Authority (CA) bundle filename in the SSL CA directory.
+                name: CRT_FILENAME
+                type: string
+              - default: ''
+                description: |
+                  HTTP proxy server (non-TLS requests).
+                name: HTTP_PROXY
+                type: string
+              - default: ''
+                description: |
+                  HTTPS proxy server (TLS requests).
+                name: HTTPS_PROXY
+                type: string
+              - default: ''
+                description: |
+                  Opt out of proxying HTTP/HTTPS requests.
+                name: NO_PROXY
+                type: string
+              - default: ''
+                description: |
+                  Path to the directory for storing the cloned Git repository, relative to the
+                  output directory.
+                name: SUBDIRECTORY
+                type: string
+              - default: /home/git
+                description: |
+                  Absolute path to the Git user home directory.
+                name: USER_HOME
+                type: string
+              - default: 'true'
+                description: |
+                  Clean out the contents of the default Workspace before specific Git operations occur, if data exists.
+                name: DELETE_EXISTING
+                type: string
+              - default: 'false'
+                description: |
+                  Log the executed commands.
+                name: VERBOSE
+                type: string
+              - default: 'true'
+                description: |
+                  Sets the global `http.sslVerify` value, `false` is not advised unless
+                  you trust the remote repository.
+                name: SSL_VERIFY
+                type: string
+              - description: |
+                  Git repository URL.
+                name: URL
+                type: string
+              - default: main
+                description: |
+                  Revision to checkout, an branch, tag, sha, ref, etc...
+                name: REVISION
+                type: string
+              - default: ''
+                description: |
+                  Repository `refspec` to fetch before checking out the revision.
+                name: REFSPEC
+                type: string
+              - default: 'true'
+                description: |
+                  Initialize and fetch Git submodules.
+                name: SUBMODULES
+                type: string
+              - default: '1'
+                description: |
+                  Number of commits to fetch, a "shallow clone" is a single commit.
+                name: DEPTH
+                type: string
+              - default: ''
+                description: |
+                  List of directory patterns split by comma to perform "sparse checkout".
+                name: SPARSE_CHECKOUT_DIRECTORIES
+                type: string
+            results:
+              - description: |
+                  The precise commit SHA digest cloned.
+                name: COMMIT
+                type: string
+              - description: |
+                  The precise repository URL.
+                name: URL
+                type: string
+              - description: |
+                  The epoch timestamp of the commit cloned.
+                name: COMMITTER_DATE
+                type: string
+            stepTemplate:
+              computeResources:
+                limits:
+                  cpu: 100m
+                  memory: 256Mi
+                requests:
+                  cpu: 100m
+                  memory: 256Mi
+              env:
+                - name: PARAMS_URL
+                  value: 'https://github.com/desantischris/golang-ex'
+                - name: PARAMS_REVISION
+                  value: master
+                - name: PARAMS_REFSPEC
+                - name: PARAMS_SUBMODULES
+                  value: 'true'
+                - name: PARAMS_DEPTH
+                  value: '1'
+                - name: PARAMS_SPARSE_CHECKOUT_DIRECTORIES
+                - name: RESULTS_COMMITTER_DATE_PATH
+                  value: /tekton/results/COMMITTER_DATE
+                - name: RESULTS_URL_PATH
+                  value: /tekton/results/URL
+                - name: WORKSPACES_OUTPUT_PATH
+                  value: /workspace/output
+                - name: PARAMS_SSL_VERIFY
+                  value: 'true'
+                - name: PARAMS_CRT_FILENAME
+                  value: ca-bundle.crt
+                - name: PARAMS_SUBDIRECTORY
+                - name: PARAMS_DELETE_EXISTING
+                  value: 'true'
+                - name: PARAMS_HTTP_PROXY
+                - name: PARAMS_HTTPS_PROXY
+                - name: PARAMS_NO_PROXY
+                - name: PARAMS_VERBOSE
+                  value: 'false'
+                - name: PARAMS_USER_HOME
+                  value: /home/git
+                - name: WORKSPACES_SSH_DIRECTORY_BOUND
+                  value: 'false'
+                - name: WORKSPACES_SSH_DIRECTORY_PATH
+                - name: WORKSPACES_BASIC_AUTH_BOUND
+                  value: 'false'
+                - name: WORKSPACES_BASIC_AUTH_PATH
+                - name: WORKSPACES_SSL_CA_DIRECTORY_BOUND
+                  value: 'false'
+                - name: WORKSPACES_SSL_CA_DIRECTORY_PATH
+                - name: RESULTS_COMMIT_PATH
+                  value: /tekton/results/COMMIT
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 65532
+            steps:
+              - computeResources: {}
+                image: 'registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel9@sha256:52444eaec63f4ff5fcf26d94d7b4d9bc32708b79bd8c20d5b7b569f1a01bcf8d'
+                name: prepare-and-run
+                script: |
+                  set -e
+                  printf '%s' "IyEvdXNyL2Jpbi9lbnYgc2gKCmV4cG9ydCBQQVJBTVNfVVJMPSIke1BBUkFNU19VUkw6LX0iCmV4cG9ydCBQQVJBTVNfUkVWSVNJT049IiR7UEFSQU1TX1JFVklTSU9OOi19IgpleHBvcnQgUEFSQU1TX1JFRlNQRUM9IiR7UEFSQU1TX1JFRlNQRUM6LX0iCmV4cG9ydCBQQVJBTVNfU1VCTU9EVUxFUz0iJHtQQVJBTVNfU1VCTU9EVUxFUzotfSIKZXhwb3J0IFBBUkFNU19ERVBUSD0iJHtQQVJBTVNfREVQVEg6LX0iCmV4cG9ydCBQQVJBTVNfU1NMX1ZFUklGWT0iJHtQQVJBTVNfU1NMX1ZFUklGWTotfSIKZXhwb3J0IFBBUkFNU19DUlRfRklMRU5BTUU9IiR7UEFSQU1TX0NSVF9GSUxFTkFNRTotfSIKZXhwb3J0IFBBUkFNU19TVUJESVJFQ1RPUlk9IiR7UEFSQU1TX1NVQkRJUkVDVE9SWTotfSIKZXhwb3J0IFBBUkFNU19TUEFSU0VfQ0hFQ0tPVVRfRElSRUNUT1JJRVM9IiR7UEFSQU1TX1NQQVJTRV9DSEVDS09VVF9ESVJFQ1RPUklFUzotfSIKZXhwb3J0IFBBUkFNU19ERUxFVEVfRVhJU1RJTkc9IiR7UEFSQU1TX0RFTEVURV9FWElTVElORzotfSIKZXhwb3J0IFBBUkFNU19IVFRQX1BST1hZPSIke1BBUkFNU19IVFRQX1BST1hZOi19IgpleHBvcnQgUEFSQU1TX0hUVFBTX1BST1hZPSIke1BBUkFNU19IVFRQU19QUk9YWTotfSIKZXhwb3J0IFBBUkFNU19OT19QUk9YWT0iJHtQQVJBTVNfTk9fUFJPWFk6LX0iCmV4cG9ydCBQQVJBTVNfVkVSQk9TRT0iJHtQQVJBTVNfVkVSQk9TRTotfSIKZXhwb3J0IFBBUkFNU19VU0VSX0hPTUU9IiR7UEFSQU1TX1VTRVJfSE9NRTotfSIKZXhwb3J0IFBBUkFNU19HSVRfVVNFUl9FTUFJTD0iJHtQQVJBTVNfR0lUX1VTRVJfRU1BSUw6LX0iCmV4cG9ydCBQQVJBTVNfR0lUX1VTRVJfTkFNRT0iJHtQQVJBTVNfR0lUX1VTRVJfTkFNRTotfSIKZXhwb3J0IFBBUkFNU19HSVRfU0NSSVBUPSIke1BBUkFNU19HSVRfU0NSSVBUOi19IgoKZXhwb3J0IFdPUktTUEFDRVNfU09VUkNFX1BBVEg9IiR7V09SS1NQQUNFU19TT1VSQ0VfUEFUSDotfSIKZXhwb3J0IFdPUktTUEFDRVNfT1VUUFVUX1BBVEg9IiR7V09SS1NQQUNFU19PVVRQVVRfUEFUSDotfSIKZXhwb3J0IFdPUktTUEFDRVNfU1NIX0RJUkVDVE9SWV9CT1VORD0iJHtXT1JLU1BBQ0VTX1NTSF9ESVJFQ1RPUllfQk9VTkQ6LX0iCmV4cG9ydCBXT1JLU1BBQ0VTX1NTSF9ESVJFQ1RPUllfUEFUSD0iJHtXT1JLU1BBQ0VTX1NTSF9ESVJFQ1RPUllfUEFUSDotfSIKZXhwb3J0IFdPUktTUEFDRVNfQkFTSUNfQVVUSF9CT1VORD0iJHtXT1JLU1BBQ0VTX0JBU0lDX0FVVEhfQk9VTkQ6LX0iCmV4cG9ydCBXT1JLU1BBQ0VTX0JBU0lDX0FVVEhfUEFUSD0iJHtXT1JLU1BBQ0VTX0JBU0lDX0FVVEhfUEFUSDotfSIKZXhwb3J0IFdPUktTUEFDRVNfU1NMX0NBX0RJUkVDVE9SWV9CT1VORD0iJHtXT1JLU1BBQ0VTX1NTTF9DQV9ESVJFQ1RPUllfQk9VTkQ6LX0iCmV4cG9ydCBXT1JLU1BBQ0VTX1NTTF9DQV9ESVJFQ1RPUllfUEFUSD0iJHtXT1JLU1BBQ0VTX1NTTF9DQV9ESVJFQ1RPUllfUEFUSDotfSIKCmV4cG9ydCBSRVNVTFRTX0NPTU1JVFRFUl9EQVRFX1BBVEg9IiR7UkVTVUxUU19DT01NSVRURVJfREFURV9QQVRIOi19IgpleHBvcnQgUkVTVUxUU19DT01NSVRfUEFUSD0iJHtSRVNVTFRTX0NPTU1JVF9QQVRIOi19IgpleHBvcnQgUkVTVUxUU19VUkxfUEFUSD0iJHtSRVNVTFRTX1VSTF9QQVRIOi19IgoKIyBmdWxsIHBhdGggdG8gdGhlIGNoZWNrb3V0IGRpcmVjdG9yeSwgdXNpbmcgdGhlIHNvdXJjZSB3b3Jrc3BhY2UgYW5kIHN1YmRpcmVjdG9yIHBhcmFtZXRlcgpbWyAhIC16ICR7V09SS1NQQUNFU19TT1VSQ0VfUEFUSH0gXV0gJiYgZXhwb3J0IFdPUktTUEFDRVNfUk9PVF9QQVRIPSIke1dPUktTUEFDRVNfU09VUkNFX1BBVEh9IgpbWyAhIC16ICR7V09SS1NQQUNFU19PVVRQVVRfUEFUSH0gXV0gJiYgZXhwb3J0IFdPUktTUEFDRVNfUk9PVF9QQVRIPSIke1dPUktTUEFDRVNfT1VUUFVUX1BBVEh9IgoKY2hlY2tvdXRfZGlyPSIke1dPUktTUEFDRVNfUk9PVF9QQVRIfS8ke1BBUkFNU19TVUJESVJFQ1RPUll9IgoKIwojIEZ1bmN0aW9ucwojCgpmYWlsKCkgewogICAgZWNobyAiRVJST1I6ICR7QH0iIDE+JjIKICAgIGV4aXQgMQp9CgpwaGFzZSgpIHsKICAgIGVjaG8gIi0tLT4gUGhhc2U6ICR7QH0uLi4iCn0KCiMgSW5zcGVjdCB0aGUgZW52aXJvbm1lbnQgdmFyaWFibGVzIHRvIGFzc2VydCB0aGUgbWluaW11bSBjb25maWd1cmF0aW9uIGlzIGluZm9ybWVkLgphc3NlcnRfcmVxdWlyZWRfY29uZmlndXJhdGlvbl9vcl9mYWlsKCkgewogICAgW1sgLXogIiR7UEFSQU1TX1VSTH0iICAmJiAgLXogIiR7UEFSQU1TX0dJVF9TQ1JJUFR9IiBdXSAmJgogICAgICAgIGZhaWwgIlBhcmFtZXRlciBVUkwgb3IgU0NSSVBUIG11c3QgYmUgc2V0ISIKCiAgICBbWyAteiAiJHtXT1JLU1BBQ0VTX1JPT1RfUEFUSH0iIF1dICYmCiAgICAgICAgZmFpbCAiUm9vdCBXb3Jrc3BhY2UgaXMgbm90IHNldCEiCgogICAgW1sgISAtZCAiJHtXT1JLU1BBQ0VTX1JPT1RfUEFUSH0iIF1dICYmCiAgICAgICAgZmFpbCAiUm9vdCBXb3Jrc3BhY2UgZGlyZWN0b3J5IG5vdCBmb3VuZCEiCiAgICByZXR1cm4gMAp9CgojIENvcHkgdGhlIGZpbGUgaW50byB0aGUgZGVzdGluYXRpb24sIGNoZWNraW5nIGlmIHRoZSBzb3VyY2UgZXhpc3RzLgpjb3B5X29yX2ZhaWwoKSB7CiAgICBsb2NhbCBfbW9kZT0iJHsxfSIKICAgIGxvY2FsIF9zcmM9IiR7Mn0iCiAgICBsb2NhbCBfZHN0PSIkezN9IgoKICAgIGlmIFtbICEgLWYgIiR7X3NyY30iICYmICEgLWQgIiR7X3NyY30iIF1dOyB0aGVuCiAgICAgICAgZmFpbCAiU291cmNlIGZpbGUvZGlyZWN0b3J5IGlzIG5vdCBmb3VuZCBhdCAnJHtfc3JjfSciCiAgICBmaQoKICAgIGlmIFtbIC1kICIke19zcmN9IiBdXTsgdGhlbgogICAgICAgIGNwIC1SdiAke19zcmN9ICR7X2RzdH0KICAgICAgICBjaG1vZCAtdiAke19tb2RlfSAke19kc3R9CiAgICBlbHNlCiAgICAgICAgaW5zdGFsbCAtLXZlcmJvc2UgLS1tb2RlPSR7X21vZGV9ICR7X3NyY30gJHtfZHN0fQogICAgZmkKfQoKIyBEZWxldGUgYW55IGV4aXN0aW5nIGNvbnRlbnRzIG9mIHRoZSByZXBvIGRpcmVjdG9yeSBpZiBpdCBleGlzdHMuIFdlIGRvbid0IGp1c3QgInJtIC1yZiA8ZGlyPiIKIyBiZWNhdXNlIG1pZ2h0IGJlICIvIiBvciB0aGUgcm9vdCBvZiBhIG1vdW50ZWQgdm9sdW1lLgpjbGVhbl9kaXIoKSB7CiAgICBsb2NhbCBfZGlyPSIkezF9IgoKICAgIFtbICEgLWQgIiR7X2Rpcn0iIF1dICYmCiAgICAgICAgcmV0dXJuIDAKCiAgICAjIERlbGV0ZSBub24taGlkZGVuIGZpbGVzIGFuZCBkaXJlY3RvcmllcwogICAgcm0gLXJmdiAke19kaXI6P30vKgogICAgIyBEZWxldGUgZmlsZXMgYW5kIGRpcmVjdG9yaWVzIHN0YXJ0aW5nIHdpdGggLiBidXQgZXhjbHVkaW5nIC4uCiAgICBybSAtcmZ2ICR7X2Rpcn0vLlshLl0qCiAgICAjIERlbGV0ZSBmaWxlcyBhbmQgZGlyZWN0b3JpZXMgc3RhcnRpbmcgd2l0aCAuLiBwbHVzIGFueSBvdGhlciBjaGFyYWN0ZXIKICAgIHJtIC1yZnYgJHtfZGlyfS8uLj8qCn0KCiMKIyBTZXR0aW5ncwojCgojIHdoZW4gdGhlIGtvLWFwcCBkaXJlY3RvcnkgaXMgcHJlc2VudCwgbWFraW5nIHN1cmUgaXQncyBwYXJ0IG9mIHRoZSBQQVRICltbIC1kICIva28tYXBwIiBdXSAmJiBleHBvcnQgUEFUSD0iJHtQQVRIfTova28tYXBwIgoKIyBtYWtpbmcgdGhlIHNoZWxsIHZlcmJvc2Ugd2hlbiB0aGUgcGFyYW10ZXIgaXMgc2V0CltbICIke1BBUkFNU19WRVJCT1NFfSIgPT0gInRydWUiIF1dICYmIHNldCAteAoKcmV0dXJuIDA=" |base64 -d >"/scripts/common.sh"
+                  printf '%s' "IyEvdXNyL2Jpbi9lbnYgc2gKc2V0IC1ldQoKc291cmNlICQoQ0RQQVRIPSBjZCAtLSAiJChkaXJuYW1lIC0tICR7MH0pIiAmJiBwd2QpL2NvbW1vbi5zaAoKYXNzZXJ0X3JlcXVpcmVkX2NvbmZpZ3VyYXRpb25fb3JfZmFpbAoKcGhhc2UgIlNldHRpbmcgb3V0cHV0IHdvcmtzcGFjZSBhcyBzYWZlIGRpcmVjdG9yeSAoJyR7V09SS1NQQUNFU19ST09UX1BBVEh9JykiCmdpdCBjb25maWcgLS1nbG9iYWwgLS1hZGQgc2FmZS5kaXJlY3RvcnkgIiR7V09SS1NQQUNFU19ST09UX1BBVEh9IgoKIyBTZXR0aW5nIHVwIHRoZSBjb25maWcgZm9yIHRoZSBnaXQuCgppZiBbIC1uICIke1BBUkFNU19HSVRfVVNFUl9FTUFJTH0iIF0gOyB0aGVuCiAgICBwaGFzZSAiU2V0dGluZyBnbG9iYWwgZW1haWwgZm9yIGdpdCAke1BBUkFNU19HSVRfVVNFUl9FTUFJTH0iCiAgICBnaXQgY29uZmlnIC0tZ2xvYmFsIHVzZXIuZW1haWwgIiR7UEFSQU1TX0dJVF9VU0VSX0VNQUlMfSIKZmkKCmlmIFsgLW4gIiR7UEFSQU1TX0dJVF9VU0VSX05BTUV9IiBdIDsgdGhlbgogICAgcGhhc2UgIlNldHRpbmcgZ2xvYmFsIHVzZXJuYW1lIGZvciBnaXQgJHtQQVJBTVNfR0lUX1VTRVJfTkFNRX0iCiAgICBnaXQgY29uZmlnIC0tZ2xvYmFsIHVzZXIubmFtZSAiJHtQQVJBTVNfR0lUX1VTRVJfTkFNRX0iCmZpCgojCiMgQ0EgKGBzc2wtY2EtZGlyZWN0b3J5YCBXb3Jrc3BhY2UpCiMKCmlmIFtbICIke1dPUktTUEFDRVNfU1NMX0NBX0RJUkVDVE9SWV9CT1VORH0iID09ICJ0cnVlIiAmJiAtbiAiJHtQQVJBTVNfQ1JUX0ZJTEVOQU1FfSIgXV07IHRoZW4KCXBoYXNlICJJbnNwZWN0aW5nICdzc2wtY2EtZGlyZWN0b3J5JyB3b3Jrc3BhY2UgbG9va2luZyBmb3IgJyR7UEFSQU1TX0NSVF9GSUxFTkFNRX0nIGZpbGUiCgljcnQ9IiR7V09SS1NQQUNFU19TU0xfQ0FfRElSRUNUT1JZX1BBVEh9LyR7UEFSQU1TX0NSVF9GSUxFTkFNRX0iCglbWyAhIC1mICIke2NydH0iIF1dICYmCgkJZmFpbCAiQ1JUIGZpbGUgKFBBUkFNU19DUlRfRklMRU5BTUUpIG5vdCBmb3VuZCBhdCAnJHtjcnR9JyIKCglwaGFzZSAiRXhwb3J0aW5nIGN1c3RvbSBDQSBjZXJ0aWZpY2F0ZSAnR0lUX1NTTF9DQUlORk89JHtjcnR9JyIKCWV4cG9ydCBHSVRfU1NMX0NBSU5GTz0ke2NydH0KZmkKCiMKIyBQcm94eSBTZXR0aW5ncwojCgpwaGFzZSAiU2V0dGluZyB1cCBIVFRQX1BST1hZPScke1BBUkFNU19IVFRQX1BST1hZfSciCltbIC1uICIke1BBUkFNU19IVFRQX1BST1hZfSIgXV0gJiYgZXhwb3J0IEhUVFBfUFJPWFk9IiR7UEFSQU1TX0hUVFBfUFJPWFl9IgoKcGhhc2UgIlNldHR0aW5nIHVwIEhUVFBTX1BST1hZPScke1BBUkFNU19IVFRQU19QUk9YWX0nIgpbWyAtbiAiJHtQQVJBTVNfSFRUUFNfUFJPWFl9IiBdXSAmJiBleHBvcnQgSFRUUFNfUFJPWFk9IiR7UEFSQU1TX0hUVFBTX1BST1hZfSIKCnBoYXNlICJTZXR0aW5nIHVwIE5PX1BST1hZPScke1BBUkFNU19OT19QUk9YWX0nIgpbWyAtbiAiJHtQQVJBTVNfTk9fUFJPWFl9IiBdXSAmJiBleHBvcnQgTk9fUFJPWFk9IiR7UEFSQU1TX05PX1BST1hZfSIKCgppZiBbWyAhIC16ICIke1BBUkFNU19VUkx9IiBdXTsKdGhlbgogICAgcGhhc2UgIkNsb25pbmcgJyR7UEFSQU1TX1VSTH0nIGludG8gJyR7Y2hlY2tvdXRfZGlyfSciCiAgICBzZXQgLXgKICAgIGV4ZWMgZ2l0LWluaXQgXAogICAgICAgIC11cmw9IiR7UEFSQU1TX1VSTH0iIFwKICAgICAgICAtcmV2aXNpb249IiR7UEFSQU1TX1JFVklTSU9OfSIgXAogICAgICAgIC1yZWZzcGVjPSIke1BBUkFNU19SRUZTUEVDfSIgXAogICAgICAgIC1wYXRoPSIke2NoZWNrb3V0X2Rpcn0iIFwKICAgICAgICAtc3NsVmVyaWZ5PSIke1BBUkFNU19TU0xfVkVSSUZZfSIgXAogICAgICAgIC1zdWJtb2R1bGVzPSIke1BBUkFNU19TVUJNT0RVTEVTfSIgXAogICAgICAgIC1kZXB0aD0iJHtQQVJBTVNfREVQVEh9IiBcCiAgICAgICAgLXNwYXJzZUNoZWNrb3V0RGlyZWN0b3JpZXM9IiR7UEFSQU1TX1NQQVJTRV9DSEVDS09VVF9ESVJFQ1RPUklFU30iCmVsc2UKICAgIHBoYXNlICJSdW5uaW5nIHRoZSBwcm92aWRlZCBzY3JpcHRzICR7UEFSQU1TX0dJVF9TQ1JJUFR9IGluICR7Y2hlY2tvdXRfZGlyfSIKICAgIGV2YWwgIiR7UEFSQU1TX0dJVF9TQ1JJUFR9IgoKICAgIFJFU1VMVF9TSEE9IiQoZ2l0IHJldi1wYXJzZSBIRUFEIHwgdHIgLWQgJ1xuJykiCiAgICBFWElUX0NPREU9IiQ/IgogICAgaWYgWyAiJEVYSVRfQ09ERSIgIT0gMCBdCiAgICB0aGVuCiAgICAgICAgZXhpdCAkRVhJVF9DT0RFCiAgICBmaQogICAgIyBNYWtlIHN1cmUgd2UgZG9uJ3QgYWRkIGEgdHJhaWxpbmcgbmV3bGluZSB0byB0aGUgcmVzdWx0IQogICAgcHJpbnRmICIlcyIgIiRSRVNVTFRfU0hBIiA+ICIke1JFU1VMVFNfQ09NTUlUX1BBVEh9IgogICAgZWNobyAkUkVTVUxUX1NIQQpmaQoK" |base64 -d >"/scripts/git-run.sh"
+                  printf '%s' "IyEvdXNyL2Jpbi9lbnYgc2gKIwojIFNldHMgdXAgdGhlIGJhc2ljIGFuZCBTU0ggYXV0aGVudGljYXRpb24gYmFzZWQgb24gaW5mb3JtZWQgd29ya3NwYWNlcywgYXMgd2VsbCBhcyBjbGVhbmluZyB1cCB0aGUKIyBwcmV2aW91cyBnaXQtY2xvbmUgc3RhbGUgZGF0YS4KIwoKc2V0IC1ldQoKc291cmNlICQoQ0RQQVRIPSBjZCAtLSAiJChkaXJuYW1lIC0tICR7MH0pIiAmJiBwd2QpL2NvbW1vbi5zaAoKYXNzZXJ0X3JlcXVpcmVkX2NvbmZpZ3VyYXRpb25fb3JfZmFpbAoKcGhhc2UgIlByZXBhcmluZyB0aGUgZmlsZXN5c3RlbSBiZWZvcmUgY2xvbmluZyB0aGUgcmVwb3NpdG9yeSIKCmlmIFtbICIke1BBUkFNU19ERUxFVEVfRVhJU1RJTkd9IiA9PSAidHJ1ZSIgXV07IHRoZW4KCXBoYXNlICJEZWxldGluZyBhbGwgY29udGVudHMgb2YgY2hlY2tvdXQtZGlyICcke2NoZWNrb3V0X2Rpcn0nIgoJY2xlYW5fZGlyICR7Y2hlY2tvdXRfZGlyfSB8fCB0cnVlCmZpCgppZiBbWyAiJHtXT1JLU1BBQ0VTX0JBU0lDX0FVVEhfQk9VTkR9IiA9PSAidHJ1ZSIgXV07IHRoZW4KCXBoYXNlICJDb25maWd1cmluZyBHaXQgYXV0aGVudGljYXRpb24gd2l0aCAnYmFzaWMtYXV0aCcgV29ya3NwYWNlIGZpbGVzIgoKCWZvciBmIGluIC5naXQtY3JlZGVudGlhbHMgLmdpdGNvbmZpZzsgZG8KCQlzcmM9IiR7V09SS1NQQUNFU19CQVNJQ19BVVRIX1BBVEh9LyR7Zn0iCgkJcGhhc2UgIkNvcHlpbmcgJyR7c3JjfScgdG8gJyR7UEFSQU1TX1VTRVJfSE9NRX0nIgoJCWNvcHlfb3JfZmFpbCA0MDAgJHtzcmN9ICIke1BBUkFNU19VU0VSX0hPTUV9LyIKCWRvbmUKZmkKCmlmIFtbICIke1dPUktTUEFDRVNfU1NIX0RJUkVDVE9SWV9CT1VORH0iID09ICJ0cnVlIiBdXTsgdGhlbgoJcGhhc2UgIkNvcHlpbmcgJy5zc2gnIGZyb20gc3NoLWRpcmVjdG9yeSB3b3Jrc3BhY2UgKCcke1dPUktTUEFDRVNfU1NIX0RJUkVDVE9SWV9QQVRIfScpIgoKCWRvdF9zc2g9IiR7UEFSQU1TX1VTRVJfSE9NRX0vLnNzaCIKCWNvcHlfb3JfZmFpbCA3MDAgJHtXT1JLU1BBQ0VTX1NTSF9ESVJFQ1RPUllfUEFUSH0gJHtkb3Rfc3NofQoJY2htb2QgLVJ2IDQwMCAke2RvdF9zc2h9LyoKZmkKCgpleGl0IDA=" |base64 -d >"/scripts/prepare.sh"
+                  printf '%s' "IyEvdXNyL2Jpbi9lbnYgc2gKIwojIFNjYW4gdGhlIGNsb25lZCByZXBvc2l0b3J5IGluIG9yZGVyIHRvIHJlcG9ydCBkZXRhaWxzIHdyaXR0aW5nIHRoZSByZXN1bHQgZmlsZXMuCiMKCnNldCAtZXUKCnNvdXJjZSAkKENEUEFUSD0gY2QgLS0gIiQoZGlybmFtZSAtLSAkezB9KSIgJiYgcHdkKS9jb21tb24uc2gKCmFzc2VydF9yZXF1aXJlZF9jb25maWd1cmF0aW9uX29yX2ZhaWwKCnBoYXNlICJDb2xsZWN0aW5nIGNsb25lZCByZXBvc2l0b3J5IGluZm9ybWF0aW9uICgnJHtjaGVja291dF9kaXJ9JykiCgpjZCAiJHtjaGVja291dF9kaXJ9IiB8fCBmYWlsICJOb3QgYWJsZSB0byBlbnRlciBjaGVja291dC1kaXIgJyR7Y2hlY2tvdXRfZGlyfSciCgpwaGFzZSAiU2V0dGluZyBvdXRwdXQgd29ya3NwYWNlIGFzIHNhZmUgZGlyZWN0b3J5ICgnJHtXT1JLU1BBQ0VTX1JPT1RfUEFUSH0nKSIKZ2l0IGNvbmZpZyAtLWdsb2JhbCAtLWFkZCBzYWZlLmRpcmVjdG9yeSAiJHtXT1JLU1BBQ0VTX1JPT1RfUEFUSH0iCgpyZXN1bHRfc2hhPSIkKGdpdCByZXYtcGFyc2UgSEVBRCkiCnJlc3VsdF9jb21taXR0ZXJfZGF0ZT0iJChnaXQgbG9nIC0xIC0tcHJldHR5PSVjdCkiCgpwaGFzZSAiUmVwb3J0aW5nIGxhc3QgY29tbWl0IGRhdGUgJyR7cmVzdWx0X2NvbW1pdHRlcl9kYXRlfSciCnByaW50ZiAiJXMiICIke3Jlc3VsdF9jb21taXR0ZXJfZGF0ZX0iID4ke1JFU1VMVFNfQ09NTUlUVEVSX0RBVEVfUEFUSH0KCnBoYXNlICJSZXBvcnRpbmcgcGFyc2VkIHJldmlzaW9uIFNIQSAnJHtyZXN1bHRfc2hhfSciCnByaW50ZiAiJXMiICIke3Jlc3VsdF9zaGF9IiA+JHtSRVNVTFRTX0NPTU1JVF9QQVRIfQoKcGhhc2UgIlJlcG9ydGluZyByZXBvc2l0b3J5IFVSTCAnJHtQQVJBTVNfVVJMfSciCnByaW50ZiAiJXMiICIke1BBUkFNU19VUkx9IiA+JHtSRVNVTFRTX1VSTF9QQVRIfQoKZXhpdCAw" |base64 -d >"/scripts/report.sh"
+                  chmod +x /scripts/*.sh;echo "Running Script /scripts/prepare.sh";
+                      /scripts/prepare.sh;echo "Running Script /scripts/git-run.sh";
+                      /scripts/git-run.sh;echo "Running Script /scripts/report.sh";
+                      /scripts/report.sh;
+                volumeMounts:
+                  - mountPath: /scripts
+                    name: scripts-dir
+                  - mountPath: /home/git
+                    name: user-home
+                workingDir: /workspace/output
+            volumes:
+              - emptyDir: {}
+                name: user-home
+              - emptyDir: {}
+                name: scripts-dir
+            workspaces:
+              - description: |
+                  A `.ssh` directory with private key, `known_hosts`, `config`, etc.
+                  Copied to the Git user's home before cloning the repository, in order to
+                  server as authentication mechanismBinding a Secret to this Workspace is
+                  strongly recommended over other volume types.
+                name: ssh-directory
+                optional: true
+              - description: |
+                  A Workspace containing a `.gitconfig` and `.git-credentials` files.
+                  These will be copied to the user's home before Git commands run. All
+                  other files in this Workspace are ignored. It is strongly recommended to
+                  use `ssh-directory` over `basic-auth` whenever possible, and to bind a
+                  Secret to this Workspace over other volume types.
+                name: basic-auth
+                optional: true
+              - description: |
+                  A Workspace containing CA certificates, this will be used by Git to
+                  verify the peer with when interacting with remote repositories using
+                  HTTPS.
+                name: ssl-ca-directory
+                optional: true
+              - description: |
+                  A workspace that contains the fetched git repository, data will be placed on the root of the
+                  Workspace, or on the relative path defined by the SUBDIRECTORY
+                  parameter.
+                name: output
+          artifacts: {}
+          provenance:
+            featureFlags:
+              maxResultSize: 4096
+              awaitSidecarReadiness: true
+              coschedule: workspaces
+              resultExtractionMethod: termination-message
+              enforceNonfalsifiability: none
+              enableAPIFields: beta
+              runningInEnvWithInjectedSidecars: true
+              verificationNoMatchPolicy: ignore
+              enableProvenanceInStatus: true
+            refSource:
+              digest:
+                sha256: b66f02d09bc22837475cd63eab3f8366077f2bc0633188db86917a435840e5b0
+              uri: /apis/tekton.dev/v1/namespaces/openshift-pipelines/task/git-clone@273afffa-7197-4062-8336-0e8a5d7d4771
+          steps:
+            - container: step-prepare-and-run
+              imageID: 'registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel9@sha256:52444eaec63f4ff5fcf26d94d7b4d9bc32708b79bd8c20d5b7b569f1a01bcf8d'
+              name: prepare-and-run
+              terminated:
+                containerID: 'cri-o://fddcbdffb742d13f099fe74ba168bb77451b9d8d58b32cd4b609d94242c04aae'
+                exitCode: 0
+                finishedAt: '2026-01-10T00:39:51Z'
+                message: '[{"key":"COMMIT","value":"3a43c4e1c957da5feb48790c0c4a8cf803de21f9","type":1},{"key":"COMMITTER_DATE","value":"1767987668","type":1},{"key":"URL","value":"https://github.com/desantischris/golang-ex","type":1},{"key":"commit","value":"3a43c4e1c957da5feb48790c0c4a8cf803de21f9"},{"key":"url","value":"https://github.com/desantischris/golang-ex"}]'
+                reason: Completed
+                startedAt: '2026-01-10T00:39:49Z'
+              terminationReason: Completed
+          completionTime: '2026-01-10T00:39:51Z'
+          startTime: '2026-01-10T00:39:36Z'
+          podName: golang-ex-demo-qfpi7g-fetch-repository-pod
+          results:
+            - name: COMMIT
+              type: string
+              value: 3a43c4e1c957da5feb48790c0c4a8cf803de21f9
+            - name: COMMITTER_DATE
+              type: string
+              value: '1767987668'
+            - name: URL
+              type: string
+              value: 'https://github.com/desantischris/golang-ex'
+          conditions:
+            - lastTransitionTime: '2026-01-10T00:39:51Z'
+              message: All Steps have completed executing
+              reason: Succeeded
+              status: 'True'
+              type: Succeeded
+          duration: 15s
+          reason: Succeeded
+      - name: build
+        params:
+          - name: IMAGE
+            value: 'image-registry.openshift-image-registry.svc:5000/desantischris-dev/golang-ex-demo'
+          - name: TLS_VERIFY
+            value: 'false'
+          - name: CONTEXT
+            value: .
+          - name: VERSION
+            value: 1.18-ubi7
+        runAfter:
+          - fetch-repository
+        taskRef:
+          params:
+            - name: kind
+              value: task
+            - name: name
+              value: s2i-go
+            - name: namespace
+              value: openshift-pipelines
+          resolver: cluster
+        workspaces:
+          - name: source
+            workspace: workspace
+        status:
+          taskSpec:
+            description: |
+              Builds the source code using the s2i's Golang builder-image
+              "image-registry.openshift-image-registry.svc:5000/openshift/golang".
+            params:
+              - description: |
+                  Fully qualified container image name to be built by s2i.
+                name: IMAGE
+                type: string
+              - default: latest
+                description: The tag of the imagestream for the corresponding language version
+                name: VERSION
+                type: string
+              - default: 'image:///usr/libexec/s2i'
+                description: |
+                  Specify a URL containing the default assemble and run scripts for the builder image
+                name: IMAGE_SCRIPTS_URL
+                type: string
+              - default: []
+                description: |
+                  Array containing string of Environment Variables as "KEY=VALUE"
+                name: ENV_VARS
+                type: array
+              - default: .
+                description: |
+                  Path to the directory to use as context.
+                name: CONTEXT
+                type: string
+              - default: vfs
+                description: |
+                  Set buildah storage driver to reflect the currrent cluster node's
+                  settings.
+                name: STORAGE_DRIVER
+                type: string
+              - default: oci
+                description: 'The format of the built container, oci or docker'
+                name: FORMAT
+                type: string
+              - default: ''
+                description: |
+                  Extra parameters passed for the build command when building images.
+                name: BUILD_EXTRA_ARGS
+                type: string
+              - default: ''
+                description: |
+                  Extra parameters passed for the push command when pushing images.
+                name: PUSH_EXTRA_ARGS
+                type: string
+              - default: 'false'
+                description: |
+                  Skip pushing the image to the container registry.
+                name: SKIP_PUSH
+                type: string
+              - default: 'true'
+                description: |
+                  Sets the TLS verification flag, `true` is recommended.
+                name: TLS_VERIFY
+                type: string
+              - default: 'false'
+                description: |
+                  Turns on verbose logging, all commands executed will be printed out.
+                name: VERBOSE
+                type: string
+            results:
+              - description: |
+                  Fully qualified image name.
+                name: IMAGE_URL
+                type: string
+              - description: |
+                  Digest of the image just built.
+                name: IMAGE_DIGEST
+                type: string
+            stepTemplate:
+              computeResources: {}
+              env:
+                - name: PARAMS_IMAGE
+                  value: 'image-registry.openshift-image-registry.svc:5000/desantischris-dev/golang-ex-demo'
+                - name: PARAMS_VERSION
+                  value: 1.18-ubi7
+                - name: PARAMS_IMAGE_SCRIPTS_URL
+                  value: 'image:///usr/libexec/s2i'
+                - name: PARAMS_CONTEXT
+                  value: .
+                - name: PARAMS_FORMAT
+                  value: oci
+                - name: PARAMS_STORAGE_DRIVER
+                  value: vfs
+                - name: PARAMS_BUILD_EXTRA_ARGS
+                - name: PARAMS_PUSH_EXTRA_ARGS
+                - name: PARAMS_SKIP_PUSH
+                  value: 'false'
+                - name: PARAMS_TLS_VERIFY
+                  value: 'false'
+                - name: PARAMS_VERBOSE
+                  value: 'false'
+                - name: WORKSPACES_SOURCE_BOUND
+                  value: 'true'
+                - name: WORKSPACES_SOURCE_PATH
+                  value: /workspace/source
+                - name: WORKSPACES_DOCKERCONFIG_BOUND
+                  value: 'false'
+                - name: WORKSPACES_DOCKERCONFIG_PATH
+                - name: RESULTS_IMAGE_URL_PATH
+                  value: /tekton/results/IMAGE_URL
+                - name: RESULTS_IMAGE_DIGEST_PATH
+                  value: /tekton/results/IMAGE_DIGEST
+            steps:
+              - computeResources: {}
+                env:
+                  - name: S2I_BUILDER_IMAGE
+                    value: 'image-registry.openshift-image-registry.svc:5000/openshift/golang:1.18-ubi7'
+                image: 'registry.redhat.io/source-to-image/source-to-image-rhel9@sha256:bc10e7d6122ede5cf4f2882c200447683255465a1080e826761e90bfb983506e'
+                name: s2i-generate
+                script: |
+                  set -e
+                  printf '%s' "IyEvdXNyL2Jpbi9lbnYgYmFzaAojCiMgV3JhcHBlciBhcm91bmQgImJ1aWxkYWggYnVkIiB0byBidWlsZCBhbmQgcHVzaCBhIGNvbnRhaW5lciBpbWFnZSBiYXNlZCBvbiBhIERvY2tlcmZpbGUuCiMKCnNob3B0IC1zIGluaGVyaXRfZXJyZXhpdApzZXQgLWV1IC1vIHBpcGVmYWlsCgpzb3VyY2UgIiQoZGlybmFtZSAke0JBU0hfU09VUkNFWzBdfSkvY29tbW9uLnNoIgpzb3VyY2UgIiQoZGlybmFtZSAke0JBU0hfU09VUkNFWzBdfSkvYnVpbGRhaC1jb21tb24uc2giCgpmdW5jdGlvbiBfYnVpbGRhaCgpIHsKICAgIGJ1aWxkYWggXAogICAgICAgIC0tc3RvcmFnZS1kcml2ZXI9IiR7UEFSQU1TX1NUT1JBR0VfRFJJVkVSfSIgXAogICAgICAgIC0tdGxzLXZlcmlmeT0iJHtQQVJBTVNfVExTX1ZFUklGWX0iIFwKICAgICAgICAiJEAiCn0KCiMKIyBQcmVwYXJlCiMKCiMgbWFraW5nIHN1cmUgdGhlIHJlcXVpcmVkIHdvcmtzcGFjZSAic291cmNlIiBpcyBib3VuZGVkLCB3aGljaCBtZWFucyBpdHMgdm9sdW1lIGlzIGN1cnJlbnRseSBtb3VudGVkCiMgYW5kIHJlYWR5IHRvIHVzZQpwaGFzZSAiSW5zcGVjdGluZyBzb3VyY2Ugd29ya3NwYWNlICcke1dPUktTUEFDRVNfU09VUkNFX1BBVEh9JyAoUFdEPScke1BXRH0nKSIKW1sgIiR7V09SS1NQQUNFU19TT1VSQ0VfQk9VTkR9IiAhPSAidHJ1ZSIgXV0gJiYKICAgIGZhaWwgIldvcmtzcGFjZSAnc291cmNlJyBpcyBub3QgYm91bmRlZCIKCnBoYXNlICJBc3NlcnRpbmcgdGhlIGRvY2tlcmZpbGUvY29udGFpbmVyZmlsZSAnJHtET0NLRVJGSUxFX0ZVTEx9JyBleGlzdHMiCltbICEgLWYgIiR7RE9DS0VSRklMRV9GVUxMfSIgXV0gJiYKICAgIGZhaWwgIkRvY2tlcmZpbGUgbm90IGZvdW5kIGF0OiAnJHtET0NLRVJGSUxFX0ZVTEx9JyIKCnBoYXNlICJJbnNwZWN0aW5nIGNvbnRleHQgJyR7UEFSQU1TX0NPTlRFWFR9JyIKW1sgISAtZCAiJHtQQVJBTVNfQ09OVEVYVH0iIF1dICYmCiAgICBmYWlsICJDT05URVhUIHBhcmFtIGlzIG5vdCBmb3VuZCBhdCAnJHtQQVJBTVNfQ09OVEVYVH0nLCBvbiBzb3VyY2Ugd29ya3NwYWNlIgoKcGhhc2UgIkJ1aWxkaW5nIGJ1aWxkIGFyZ3MiCkJVSUxEX0FSR1M9KCkKZm9yIGJ1aWxkYXJnIGluICIkQCI7IGRvCiAgICBCVUlMRF9BUkdTKz0oIi0tYnVpbGQtYXJnPSRidWlsZGFyZyIpCmRvbmUKCiMgSGFuZGxlIG9wdGlvbmFsIGRvY2tlcmNvbmZpZyBzZWNyZXQKaWYgW1sgIiR7V09SS1NQQUNFU19ET0NLRVJDT05GSUdfQk9VTkR9IiA9PSAidHJ1ZSIgXV07IHRoZW4KCiAgICAjIGlmIGNvbmZpZy5qc29uIGV4aXN0cyBhdCB3b3Jrc3BhY2Ugcm9vdCwgd2UgdXNlIHRoYXQKICAgIGlmIHRlc3QgLWYgIiR7V09SS1NQQUNFU19ET0NLRVJDT05GSUdfUEFUSH0vY29uZmlnLmpzb24iOyB0aGVuCiAgICAgICAgZXhwb3J0IERPQ0tFUl9DT05GSUc9IiR7V09SS1NQQUNFU19ET0NLRVJDT05GSUdfUEFUSH0iCgogICAgICAgICMgZWxzZSB3ZSBsb29rIGZvciAuZG9ja2VyY29uZmlnanNvbiBhdCB0aGUgcm9vdAogICAgZWxpZiB0ZXN0IC1mICIke1dPUktTUEFDRVNfRE9DS0VSQ09ORklHX1BBVEh9Ly5kb2NrZXJjb25maWdqc29uIjsgdGhlbgogICAgICAgICMgZW5zdXJlIC5kb2NrZXIgZXhpc3QgYmVmb3JlIHRoZSBjb3B5aW5nIHRoZSBjb250ZW50CiAgICAgICAgaWYgWyAhIC1kICIkSE9NRS8uZG9ja2VyIiBdOyB0aGVuCiAgICAgICAgICAgbWtkaXIgLXAgIiRIT01FLy5kb2NrZXIiCiAgICAgICAgZmkKICAgICAgICBjcCAiJHtXT1JLU1BBQ0VTX0RPQ0tFUkNPTkZJR19QQVRIfS8uZG9ja2VyY29uZmlnanNvbiIgIiRIT01FLy5kb2NrZXIvY29uZmlnLmpzb24iCiAgICAgICAgZXhwb3J0IERPQ0tFUl9DT05GSUc9IiRIT01FLy5kb2NrZXIiCgogICAgICAgICMgbmVlZCB0byBlcnJvciBvdXQgaWYgbmVpdGhlciBmaWxlcyBhcmUgcHJlc2VudAogICAgZWxzZQogICAgICAgIGVjaG8gIm5laXRoZXIgJ2NvbmZpZy5qc29uJyBub3IgJy5kb2NrZXJjb25maWdqc29uJyBmb3VuZCBhdCB3b3Jrc3BhY2Ugcm9vdCIKICAgICAgICBleGl0IDEKICAgIGZpCmZpCgpFTlRJVExFTUVOVF9WT0xVTUU9IiIKaWYgW1sgIiR7V09SS1NQQUNFU19SSEVMX0VOVElUTEVNRU5UX0JPVU5EfSIgPT0gInRydWUiIF1dOyB0aGVuCiAgICBFTlRJVExFTUVOVF9WT0xVTUU9Ii0tdm9sdW1lICR7V09SS1NQQUNFU19SSEVMX0VOVElUTEVNRU5UX1BBVEh9Oi9ldGMvcGtpL2VudGl0bGVtZW50OnJvIgpmaQoKIwojIEJ1aWxkCiMKCnBoYXNlICJCdWlsZGluZyAnJHtQQVJBTVNfSU1BR0V9JyBiYXNlZCBvbiAnJHtET0NLRVJGSUxFX0ZVTEx9JyIKCltbIC1uICIke1BBUkFNU19CVUlMRF9FWFRSQV9BUkdTfSIgXV0gJiYKICAgIHBoYXNlICJFeHRyYSAnYnVpbGRhaCBidWQnIGFyZ3VtZW50cyBpbmZvcm1lZDogJyR7UEFSQU1TX0JVSUxEX0VYVFJBX0FSR1N9JyIKCiMgUHJvY2VzcyBCVUlMRF9FWFRSQV9BUkdTCmJ1aWxkX2V4dHJhX2FyZ3NfdG1wPSQoZWNobyAiJHtQQVJBTVNfQlVJTERfRVhUUkFfQVJHUzotfSIgfCB4YXJncyAtbjEpCmlmIFtbIC1uICIkYnVpbGRfZXh0cmFfYXJnc190bXAiIF1dOyB0aGVuCiAgICByZWFkYXJyYXkgLXQgYnVpbGRfZXh0cmFfYXJncyA8PDwgIiRidWlsZF9leHRyYV9hcmdzX3RtcCIKZWxzZQogICAgYnVpbGRfZXh0cmFfYXJncz0oKSAjIEVtcHR5IGFycmF5IGlmIG5vIGV4dHJhIGFyZ3MKZmkKCl9idWlsZGFoIGJ1ZCAiJHtidWlsZF9leHRyYV9hcmdzW0BdfSIgXAogICAgJEVOVElUTEVNRU5UX1ZPTFVNRSBcCiAgICAiJHtCVUlMRF9BUkdTW0BdfSIgXAogICAgLS1maWxlPSIke0RPQ0tFUkZJTEVfRlVMTH0iIFwKICAgIC0tdGFnPSIke1BBUkFNU19JTUFHRX0iIFwKICAgICIke1BBUkFNU19DT05URVhUfSIKCmlmIFtbICIke1BBUkFNU19TS0lQX1BVU0h9IiA9PSAidHJ1ZSIgXV07IHRoZW4KICAgIHBoYXNlICJTa2lwcGluZyBwdXNoaW5nICcke1BBUkFNU19JTUFHRX0nIHRvIHRoZSBjb250YWluZXIgcmVnaXN0cnkhIgogICAgZXhpdCAwCmZpCgojCiMgUHVzaAojCgpwaGFzZSAiUHVzaGluZyAnJHtQQVJBTVNfSU1BR0V9JyB0byB0aGUgY29udGFpbmVyIHJlZ2lzdHJ5IgoKW1sgLW4gIiR7UEFSQU1TX1BVU0hfRVhUUkFfQVJHU30iIF1dICYmCiAgICBwaGFzZSAiRXh0cmEgJ2J1aWxkYWggcHVzaCcgYXJndW1lbnRzIGluZm9ybWVkOiAnJHtQQVJBTVNfUFVTSF9FWFRSQV9BUkdTfSciCgojIHRlbXBvcmFyeSBmaWxlIHRvIHN0b3JlIHRoZSBpbWFnZSBkaWdlc3QsIGluZm9ybWF0aW9uIG9ubHkgb2J0YWluZWQgYWZ0ZXIgcHVzaGluZyB0aGUgaW1hZ2UgdG8gdGhlCiMgY29udGFpbmVyIHJlZ2lzdHJ5CmRlY2xhcmUgLXIgZGlnZXN0X2ZpbGU9Ii90bXAvYnVpbGRhaC1kaWdlc3QudHh0IgoKIyBQcm9jZXNzIFBVU0hfRVhUUkFfQVJHUwpwdXNoX2V4dHJhX2FyZ3NfdG1wPSQoZWNobyAiJHtQQVJBTVNfUFVTSF9FWFRSQV9BUkdTOi19IiB8IHhhcmdzIC1uMSkKaWYgW1sgLW4gIiRwdXNoX2V4dHJhX2FyZ3NfdG1wIiBdXTsgdGhlbgogICAgcmVhZGFycmF5IC10IHB1c2hfZXh0cmFfYXJncyA8PDwgIiRwdXNoX2V4dHJhX2FyZ3NfdG1wIgplbHNlCiAgICBwdXNoX2V4dHJhX2FyZ3M9KCkgIyBFbXB0eSBhcnJheSBpZiBubyBleHRyYSBhcmdzCmZpCgpfYnVpbGRhaCBwdXNoICIke3B1c2hfZXh0cmFfYXJnc1tAXX0iIFwKICAgIC0tZGlnZXN0ZmlsZT0iJHtkaWdlc3RfZmlsZX0iIFwKICAgICIke1BBUkFNU19JTUFHRX0iIFwKICAgICJkb2NrZXI6Ly8ke1BBUkFNU19JTUFHRX0iCgojCiMgUmVzdWx0cwojCgpwaGFzZSAiSW5zcGVjdGluZyBkaWdlc3QgcmVwb3J0ICgnJHtkaWdlc3RfZmlsZX0nKSIKCltbICEgLXIgIiR7ZGlnZXN0X2ZpbGV9IiBdXSAmJgogICAgZmFpbCAiVW5hYmxlIHRvIGZpbmQgZGlnZXN0LWZpbGUgYXQgJyR7ZGlnZXN0X2ZpbGV9JyIKCmRlY2xhcmUgLXIgZGlnZXN0X3N1bT0iJChjYXQgJHtkaWdlc3RfZmlsZX0pIgoKW1sgLXogIiR7ZGlnZXN0X3N1bX0iIF1dICYmCiAgICBmYWlsICJEaWdlc3QgZmlsZSAnJHtkaWdlc3RfZmlsZX0nIGlzIGVtcHR5ISIKCnBoYXNlICJTdWNjZXNzZnVseSBidWlsdCBjb250YWluZXIgaW1hZ2UgJyR7UEFSQU1TX0lNQUdFfScgKCcke2RpZ2VzdF9zdW19JykiCmVjaG8gLW4gIiR7UEFSQU1TX0lNQUdFfSIgfCB0ZWUgJHtSRVNVTFRTX0lNQUdFX1VSTF9QQVRIfQplY2hvIC1uICIke2RpZ2VzdF9zdW19IiB8IHRlZSAke1JFU1VMVFNfSU1BR0VfRElHRVNUX1BBVEh9Cg==" |base64 -d >"/scripts/buildah-bud.sh"
+                  printf '%s' "IyEvdXNyL2Jpbi9lbnYgYmFzaAoKZGVjbGFyZSAtcnggUEFSQU1TX0lNQUdFPSIke1BBUkFNU19JTUFHRTotfSIKZGVjbGFyZSAtcnggUEFSQU1TX0RPQ0tFUkZJTEU9IiR7UEFSQU1TX0RPQ0tFUkZJTEU6LX0iCmRlY2xhcmUgLXggUEFSQU1TX0NPTlRFWFQ9IiR7UEFSQU1TX0NPTlRFWFQ6LX0iCmRlY2xhcmUgLXJ4IFBBUkFNU19TVE9SQUdFX0RSSVZFUj0iJHtQQVJBTVNfU1RPUkFHRV9EUklWRVI6LX0iCmRlY2xhcmUgLXJ4IFBBUkFNU19CVUlMRF9FWFRSQV9BUkdTPSIke1BBUkFNU19CVUlMRF9FWFRSQV9BUkdTOi19IgpkZWNsYXJlIC1yeCBQQVJBTVNfUFVTSF9FWFRSQV9BUkdTPSIke1BBUkFNU19QVVNIX0VYVFJBX0FSR1M6LX0iCmRlY2xhcmUgLXJ4IFBBUkFNU19TS0lQX1BVU0g9IiR7UEFSQU1TX1NLSVBfUFVTSDotfSIKZGVjbGFyZSAtcnggUEFSQU1TX1RMU19WRVJJRlk9IiR7UEFSQU1TX1RMU19WRVJJRlk6LX0iCmRlY2xhcmUgLXJ4IFBBUkFNU19WRVJCT1NFPSIke1BBUkFNU19WRVJCT1NFOi19IgoKZGVjbGFyZSAtcnggV09SS1NQQUNFU19TT1VSQ0VfUEFUSD0iJHtXT1JLU1BBQ0VTX1NPVVJDRV9QQVRIOi19IgpkZWNsYXJlIC1yeCBXT1JLU1BBQ0VTX1NPVVJDRV9CT1VORD0iJHtXT1JLU1BBQ0VTX1NPVVJDRV9CT1VORDotfSIKZGVjbGFyZSAtcnggV09SS1NQQUNFU19ET0NLRVJDT05GSUdfUEFUSD0iJHtXT1JLU1BBQ0VTX0RPQ0tFUkNPTkZJR19QQVRIOi19IgpkZWNsYXJlIC1yeCBXT1JLU1BBQ0VTX0RPQ0tFUkNPTkZJR19CT1VORD0iJHtXT1JLU1BBQ0VTX0RPQ0tFUkNPTkZJR19CT1VORDotfSIKZGVjbGFyZSAtcnggV09SS1NQQUNFU19SSEVMX0VOVElUTEVNRU5UX1BBVEg9IiR7V09SS1NQQUNFU19SSEVMX0VOVElUTEVNRU5UX1BBVEg6LX0iCmRlY2xhcmUgLXJ4IFdPUktTUEFDRVNfUkhFTF9FTlRJVExFTUVOVF9CT1VORD0iJHtXT1JLU1BBQ0VTX1JIRUxfRU5USVRMRU1FTlRfQk9VTkQ6LX0iCgpkZWNsYXJlIC1yeCBSRVNVTFRTX0lNQUdFX0RJR0VTVF9QQVRIPSIke1JFU1VMVFNfSU1BR0VfRElHRVNUX1BBVEg6LX0iCmRlY2xhcmUgLXJ4IFJFU1VMVFNfSU1BR0VfVVJMX1BBVEg9IiR7UkVTVUxUU19JTUFHRV9VUkxfUEFUSDotfSIKCiMKIyBEb2NrZXJmaWxlCiMKCiMgRXhwb3NpbmcgdGhlIGZ1bGwgcGF0aCB0byB0aGUgY29udGFpbmVyIGZpbGUsIHdoaWNoIGJ5IGRlZmF1bHQgc2hvdWxkIGJlIHJlbGF0aXZlIHRvIHRoZSBwcmltYXJ5CiMgd29ya3NwYWNlLCB3aXRoIGEgZmFsbGJhY2sgdG8gYmUgcmVsYXRpdmUgdG8gdGhlIGNvbnRleHQgZGlyZWN0b3J5LgppZiBbWyAteiAiJHtET0NLRVJGSUxFX0ZVTEw6LX0iIF1dOyB0aGVuCiAgICBpZiBbWyAtciAiJHtXT1JLU1BBQ0VTX1NPVVJDRV9QQVRIfS8ke1BBUkFNU19ET0NLRVJGSUxFfSIgXV07IHRoZW4KICAgICAgICBkZWNsYXJlIC14IERPQ0tFUkZJTEVfRlVMTD0iJHtXT1JLU1BBQ0VTX1NPVVJDRV9QQVRIfS8ke1BBUkFNU19ET0NLRVJGSUxFfSIKICAgIGVsc2UKICAgICAgICBkZWNsYXJlIC14IERPQ0tFUkZJTEVfRlVMTD0iJHtXT1JLU1BBQ0VTX1NPVVJDRV9QQVRIfS8ke1BBUkFNU19DT05URVhUfS8ke1BBUkFNU19ET0NLRVJGSUxFfSIKICAgIGZpCmZpCgojCiMgQXNzZXJ0aW5nIEVudmlyb25tZW50CiMKCltbICEgLXIgIiR7RE9DS0VSRklMRV9GVUxMfSIgXV0gJiYKICAgIGZhaWwgInVuYWJsZSB0byBmaW5kIHRoZSBEb2NrZXJmaWxlLCBET0NLRVJGSUxFIG1heSBoYXZlIGFuIGluY29ycmVjdCBsb2NhdGlvbiIKCmV4cG9ydGVkX29yX2ZhaWwgXAogICAgV09SS1NQQUNFU19TT1VSQ0VfUEFUSCBcCiAgICBQQVJBTVNfSU1BR0UKCiMKIyBWZXJib3NlIE91dHB1dAojCgppZiBbWyAiJHtQQVJBTVNfVkVSQk9TRX0iID09ICJ0cnVlIiBdXTsgdGhlbgogICAgc2V0IC14CmZpCg==" |base64 -d >"/scripts/buildah-common.sh"
+                  printf '%s' "IyEvdXNyL2Jpbi9lbnYgYmFzaAoKIyB0ZWt0b24ncyBob21lIGRpcmVjdG9yeQpkZWNsYXJlIC1yeCBURUtUT05fSE9NRT0iJHtURUtUT05fSE9NRTotL3Rla3Rvbi9ob21lfSIKCiMKIyBGdW5jdGlvbnMKIwoKZnVuY3Rpb24gZmFpbCgpIHsKICAgIGVjaG8gIkVSUk9SOiAkeyp9IiAyPiYxCiAgICBleGl0IDEKfQoKZnVuY3Rpb24gcGhhc2UoKSB7CiAgICBlY2hvICItLS0+IFBoYXNlOiAkeyp9Li4uIgp9CgojIGFzc2VydCBsb2NhbCB2YXJpYWJsZXMgYXJlIGV4cG9ydGVkIG9uIHRoZSBlbnZpcm9ubWVudApmdW5jdGlvbiBleHBvcnRlZF9vcl9mYWlsKCkgewogICAgZGVjbGFyZSAtYSBfcmVxdWlyZWRfdmFycz0iJHtAfSIKCiAgICBmb3IgdiBpbiAke19yZXF1aXJlZF92YXJzW0BdfTsgZG8KICAgICAgICBbWyAteiAiJHshdn0iIF1dICYmCiAgICAgICAgICAgIGZhaWwgIicke3Z9JyBlbnZpcm9ubWVudCB2YXJpYWJsZSBpcyBub3Qgc2V0ISIKICAgIGRvbmUKCiAgICByZXR1cm4gMAp9Cg==" |base64 -d >"/scripts/common.sh"
+                  ls /scripts/buildah-*.sh;
+                  chmod +x /scripts/buildah-*.sh;
+                  printf '%s' "IyEvdXNyL2Jpbi9lbnYgYmFzaAoKIyB0ZWt0b24ncyBob21lIGRpcmVjdG9yeQpkZWNsYXJlIC1yeCBURUtUT05fSE9NRT0iJHtURUtUT05fSE9NRTotL3Rla3Rvbi9ob21lfSIKCiMKIyBGdW5jdGlvbnMKIwoKZnVuY3Rpb24gZmFpbCgpIHsKICAgIGVjaG8gIkVSUk9SOiAkeyp9IiAyPiYxCiAgICBleGl0IDEKfQoKZnVuY3Rpb24gcGhhc2UoKSB7CiAgICBlY2hvICItLS0+IFBoYXNlOiAkeyp9Li4uIgp9CgojIGFzc2VydCBsb2NhbCB2YXJpYWJsZXMgYXJlIGV4cG9ydGVkIG9uIHRoZSBlbnZpcm9ubWVudApmdW5jdGlvbiBleHBvcnRlZF9vcl9mYWlsKCkgewogICAgZGVjbGFyZSAtYSBfcmVxdWlyZWRfdmFycz0iJHtAfSIKCiAgICBmb3IgdiBpbiAke19yZXF1aXJlZF92YXJzW0BdfTsgZG8KICAgICAgICBbWyAteiAiJHshdn0iIF1dICYmCiAgICAgICAgICAgIGZhaWwgIicke3Z9JyBlbnZpcm9ubWVudCB2YXJpYWJsZSBpcyBub3Qgc2V0ISIKICAgIGRvbmUKCiAgICByZXR1cm4gMAp9Cg==" |base64 -d >"/scripts/common.sh"
+                  printf '%s' "IyEvdXNyL2Jpbi9lbnYgYmFzaAojCiMgVXNlcyB0aGUgRG9ja2VyZmlsZSBnZW5lcmF0ZWQgYnkgczJpIHRvIGFzc2VtYmxlIGEgbmV3IGNvbnRhaW5lciBpbWFnZSB1c2luZyBidWlsZGFoLgojCgpzaG9wdCAtcyBpbmhlcml0X2VycmV4aXQKc2V0IC1ldSAtbyBwaXBlZmFpbAoKZGVjbGFyZSAtciBjdXJfZGlyPSIkKGRpcm5hbWUgJHtCQVNIX1NPVVJDRVswXX0pIgoKc291cmNlICIke2N1cl9kaXJ9L2NvbW1vbi5zaCIKc291cmNlICIke2N1cl9kaXJ9L3MyaS1jb21tb24uc2giCgojIGxvYWRpbmcgYnVpbGRhaCBzZXR0aW5ncyBvdmVyd3JpdHRpbmcgdGhlIGZ1bGwgcGF0aCB0byB0aGUgY29udGFpbmVyIGZpbGUKZGVjbGFyZSAteCBET0NLRVJGSUxFX0ZVTEw9IiR7UzJJX0RPQ0tFUkZJTEV9Igpzb3VyY2UgIiR7Y3VyX2Rpcn0vYnVpbGRhaC1jb21tb24uc2giCgpwaGFzZSAiQ2hhbmdpbmcgJFBBUkFNU19DT05URVhUIHRvIHBvaW50IHRvIHByZXNlbnQgd29ya2luZyBkaXJlY3RvcnkiCltbICIkUEFSQU1TX0NPTlRFWFQiICE9ICIuIiBdXSAmJiAKICAgIFBBUkFNU19DT05URVhUPSIuIgoKcGhhc2UgIkluc3BlY3RpbmcgY29udGV4dCAnJHtQQVJBTVNfQ09OVEVYVH0nIgpbWyAhIC1kICIke1BBUkFNU19DT05URVhUfSIgXV0gJiYKICAgIGZhaWwgIkFwcGxpY2F0aW9uIHNvdXJjZSBjb2RlIGRpcmVjdG9yeSBub3QgZm91bmQgYXQgJyR7UEFSQU1TX0NPTlRFWFR9JyIKCnBoYXNlICJCdWlsZGluZyB0aGUgRG9ja2VyZmlsZSAnJHtET0NLRVJGSUxFX0ZVTEx9JyB3aXRoIGJ1aWxkYWgiCmV4ZWMgJHtjdXJfZGlyfS9idWlsZGFoLWJ1ZC5zaAo=" |base64 -d >"/scripts/s2i-build.sh"
+                  printf '%s' "IyEvdXNyL2Jpbi9lbnYgYmFzaAoKIyB0YXJnZXQgaW1hZ2UgbmFtZSAoZnVsbHkgcXVhbGlmaWVkKSB0byBiZSBidWlsZCB3aXRoIHMyaSwgcmVkZWNsYXJpbmcgdGhlIHNhbWUgcGFyYW1ldGVyIG5hbWUgdGhhbgojIGJ1aWxkYWggdGFzayB1c2VzCmRlY2xhcmUgLXggUEFSQU1TX0lNQUdFPSIke1BBUkFNU19JTUFHRTotfSIKIyBTcGVjaWZ5IGEgVVJMIGNvbnRhaW5pbmcgdGhlIGRlZmF1bHQgYXNzZW1ibGUgYW5kIHJ1biBzY3JpcHRzIGZvciB0aGUgYnVpbGRlciBpbWFnZQpkZWNsYXJlIC1yeCBQQVJBTVNfSU1BR0VfU0NSSVBUU19VUkw9IiR7UEFSQU1TX0lNQUdFX1NDUklQVFNfVVJMOi19IgoKIyB2b2x1bWUgbW91bnQgb3IgZGlyZWN0b3J5IHJlc3BvbnNpYmxlIGZvciBob2xkaW5nIGZpbGVzIAojIGxpa2UgZW52LCBEb2NrZXJmaWxlIGFuZCBhbnkgb3RoZXJzIG5lZWRlZCB0byBzdXBwb3J0IHMyaQpkZWNsYXJlIC1yeCBTMklfR0VORVJBVEVfRElSRUNUT1JZPSIke1MySV9HRU5FUkFURV9ESVJFQ1RPUlk6LS9zMmktZ2VuZXJhdGV9IgoKIyBmdWxsIHBhdGggdG8gdGhlIGNvbnRhaW5lciBmaWxlIGdlbmVyYXRlZCBieSBzMmkKZGVjbGFyZSAtcnggUzJJX0RPQ0tFUkZJTEU9IiR7UzJJX0RPQ0tFUkZJTEU6LSR7UzJJX0dFTkVSQVRFX0RJUkVDVE9SWX0vRG9ja2VyZmlsZS5nZW59IgoKIyBmdWxsIHBhdGggdG8gdGhlIGVudiBmaWxlIHVzZWQgd2l0aCB0aGUgLS1lbnZpcm9ubWVudC1maWxlIHBhcmFtZXRlciBvZiBzMmkKZGVjbGFyZSAtcnggUzJJX0VOVklST05NRU5UX0ZJTEU9IiR7UzJJX0VOVklST05NRU5UX0ZJTEU6LSR7UzJJX0dFTkVSQVRFX0RJUkVDVE9SWX0vZW52fSIKCiMKIyBBc3NlcnRpbmcgRW52aXJvbm1lbnQKIwoKZXhwb3J0ZWRfb3JfZmFpbCBcCiAgICBXT1JLU1BBQ0VTX1NPVVJDRV9QQVRIIFwKICAgIFBBUkFNU19JTUFHRQoKIwojIFZlcmJvc2UgT3V0cHV0CiMKCmRlY2xhcmUgLXggUzJJX0xPR0xFVkVMPSIwIgoKaWYgW1sgIiR7UEFSQU1TX1ZFUkJPU0V9IiA9PSAidHJ1ZSIgXV07IHRoZW4KICAgIFMySV9MT0dMRVZFTD0iMiIKICAgIHNldCAteApmaQo=" |base64 -d >"/scripts/s2i-common.sh"
+                  printf '%s' "IyEvdXNyL2Jpbi9lbnYgYmFzaAojCiMgVXNlcyBzMmkgdG8gZ2VuZXJhdGUgdGhlIHJlcGVzY3RpdmUgQ29udGFpbmVyZmlsZSBiYXNlZCBvbiB0aGUgaW5mb21yZWQgYnVpbGRlci4gVGhlIENvbnRhaW5lcmZpbGUKIyBpcyBzdG9yZWQgb24gYSB0ZW1wb3JhcnkgbG9jYXRpb24uCiMKCnNob3B0IC1zIGluaGVyaXRfZXJyZXhpdApzZXQgLWV1IC1vIHBpcGVmYWlsCgpzb3VyY2UgIiQoZGlybmFtZSAke0JBU0hfU09VUkNFWzBdfSkvY29tbW9uLnNoIgpzb3VyY2UgIiQoZGlybmFtZSAke0JBU0hfU09VUkNFWzBdfSkvczJpLWNvbW1vbi5zaCIKCiMgczJpIGJ1aWxkZXIgaW1hZ2UgbmFtZSAoZnVsbHkgcXVhbGlmaWVkKQpkZWNsYXJlIC1yeCBTMklfQlVJTERFUl9JTUFHRT0iJHtTMklfQlVJTERFUl9JTUFHRTotfSIKCiMgdGFrZXMgdGhlIHZhbHVlcyBpbiBhcmd1bWVudCBFTlZfVkFSUyBhbmQgY3JlYXRlcyBhbiBhcnJheSB1c2luZyB0aG9zZSB2YWx1ZXMKZGVjbGFyZSAtcmEgRU5WX1ZBUlM9KCR7QH0pCgojIHJlLXVzaW5nIHRoZSBzYW1lIHBhcmFtZXRlcnMgdGhhbiBidWlsZGFoLCBzMmkgbmVlZHMgYnVpbGRhaCBhYmlsaXRpZXMgdG8gY3JlYXRlIHRoZSBmaW5hbAojIGNvbnRhaW5lciBpbWFnZSBiYXNlZCBvbiB3aGF0IHMyaSBnZW5lcmF0ZXMKc291cmNlICIkKGRpcm5hbWUgJHtCQVNIX1NPVVJDRVswXX0pL2J1aWxkYWgtY29tbW9uLnNoIgoKIwojIFByZXBhcmUKIwoKIyBtYWtpbmcgc3VyZSB0aGUgcmVxdWlyZWQgd29ya3NwYWNlICJzb3VyY2UiIGlzIGJvdW5kZWQsIHdoaWNoIG1lYW5zIGl0cyB2b2x1bWUgaXMgY3VycmVudGx5IG1vdW50ZWQKIyBhbmQgcmVhZHkgdG8gdXNlCnBoYXNlICJJbnNwZWN0aW5nIHNvdXJjZSB3b3Jrc3BhY2UgJyR7V09SS1NQQUNFU19TT1VSQ0VfUEFUSH0nIChQV0Q9JyR7UFdEfScpIgpbWyAiJHtXT1JLU1BBQ0VTX1NPVVJDRV9CT1VORH0iICE9ICJ0cnVlIiBdXSAmJgogICAgZmFpbCAiV29ya3NwYWNlICdzb3VyY2UnIGlzIG5vdCBib3VuZGVkIgoKcGhhc2UgIkFwcGVuZGluZyAkUEFSQU1TX0NPTlRFWFQgd2l0aCAkV09SS1NQQUNFU19TT1VSQ0VfUEFUSCBpZiBpdCdzIHJlbGF0aXZlIgpbWyAiJFBBUkFNU19DT05URVhUIiAhPSAiLiIgJiYgIiRQQVJBTVNfQ09OVEVYVCIgIT0gLyogXV0gJiYgCiAgICBQQVJBTVNfQ09OVEVYVD0iJHtXT1JLU1BBQ0VTX1NPVVJDRV9QQVRIfS8ke1BBUkFNU19DT05URVhUfSIKCnBoYXNlICJJbnNwZWN0aW5nIGNvbnRleHQgJyR7UEFSQU1TX0NPTlRFWFR9JyIKW1sgISAtZCAiJHtQQVJBTVNfQ09OVEVYVH0iIF1dICYmCiAgICBmYWlsICJBcHBsaWNhdGlvbiBzb3VyY2UgY29kZSBkaXJlY3Rvcnkgbm90IGZvdW5kIGF0ICcke1BBUkFNU19DT05URVhUfSciCgpwaGFzZSAiQWRkaW5nIHRoZSBlbnZpcm9ubWVudCB2YXJpYWJsZXMgdG8gJyR7UzJJX0VOVklST05NRU5UX0ZJTEV9JyIKCiMgYWRkIHRoZSBlbnZpcm9ubWVudCB2YXJpYWJsZXMgdGhhdCBhcmUgc2VudCBhcyBjb21tYW5kIGxpbmUgYXJndW1lbnRzIGZyb20gRU5WX1ZBUlMgcGFyYW1ldGVyCnRvdWNoICIke1MySV9FTlZJUk9OTUVOVF9GSUxFfSIKaWYgWyAkeyNFTlZfVkFSU1tAXX0gLWd0IDAgXTsgdGhlbgogICAgZm9yIGVudl92YXIgaW4gIiR7RU5WX1ZBUlNbQF19IjsgZG8KICAgICAgICBlY2hvICIke2Vudl92YXJ9IiA+PiAiJHtTMklfRU5WSVJPTk1FTlRfRklMRX0iCiAgICBkb25lCmZpCgojCiMgUzJJIEdlbmVyYXRlCiMKCnBoYXNlICJHZW5lcmF0aW5nIHRoZSBEb2NrZXJmaWxlIGZvciBTMkkgYnVpbGRlciBpbWFnZSAnJHtTMklfQlVJTERFUl9JTUFHRX0nIgpzMmkgLS1sb2dsZXZlbCAiJHtTMklfTE9HTEVWRUx9IiBcCiAgICBidWlsZCAiJHtQQVJBTVNfQ09OVEVYVH0iICIke1MySV9CVUlMREVSX0lNQUdFfSIgXAogICAgICAgIC0taW1hZ2Utc2NyaXB0cy11cmwgIiR7UEFSQU1TX0lNQUdFX1NDUklQVFNfVVJMfSIgXAogICAgICAgIC0tYXMtZG9ja2VyZmlsZSAiJHtTMklfRE9DS0VSRklMRX0iIFwKICAgICAgICAtLWVudmlyb25tZW50LWZpbGUgIiR7UzJJX0VOVklST05NRU5UX0ZJTEV9IgoKcGhhc2UgIkluc3BlY3RpbmcgdGhlIERvY2tlcmZpbGUgZ2VuZXJhdGVkIGF0ICcke1MySV9ET0NLRVJGSUxFfSciCltbICEgLWYgIiR7UzJJX0RPQ0tFUkZJTEV9IiBdXSAmJgogICAgZmFpbCAiR2VuZXJhdGVkIERvY2tlcmZpbGUgaXMgbm90IGZvdW5kISIKCnNldCAreApwaGFzZSAiR2VuZXJhdGVkIERvY2tlcmZpbGUgcGF5bG9hZCIKZWNobyAtZW4gIj4+PiAke1MySV9ET0NLRVJGSUxFfVxuJChjYXQgJHtTMklfRE9DS0VSRklMRX0pXG48PDwgRU9GXG4iCg==" |base64 -d >"/scripts/s2i-generate.sh"
+                  ls /scripts/s2i-*.sh;
+                  chmod +x /scripts/s2i-*.sh;echo "Running Script /scripts/s2i-generate.sh";
+                    /scripts/s2i-generate.sh "$@";
+                securityContext:
+                  capabilities:
+                    add:
+                      - SETFCAP
+                volumeMounts:
+                  - mountPath: /scripts
+                    name: scripts-dir
+                  - mountPath: /s2i-generate
+                    name: s2i-generate-dir
+                workingDir: /workspace/source
+              - command:
+                  - /scripts/s2i-build.sh
+                computeResources: {}
+                image: 'registry.redhat.io/rhel9/buildah@sha256:18453ab0a62154283aaf4c45efd7543d1c8ecca1aebae46dedc7ddc0f410b232'
+                name: s2i-build
+                securityContext:
+                  capabilities:
+                    add:
+                      - SETFCAP
+                volumeMounts:
+                  - mountPath: /scripts
+                    name: scripts-dir
+                  - mountPath: /s2i-generate
+                    name: s2i-generate-dir
+                workingDir: /s2i-generate
+            volumes:
+              - emptyDir: {}
+                name: scripts-dir
+              - emptyDir: {}
+                name: s2i-generate-dir
+            workspaces:
+              - description: |
+                  Application source code, the build context for S2I workflow.
+                name: source
+              - description: An optional workspace that allows providing a .docker/config.json file for Buildah to access the container registry. The file should be placed at the root of the Workspace with name config.json.
+                name: dockerconfig
+                optional: true
+          artifacts: {}
+          provenance:
+            featureFlags:
+              maxResultSize: 4096
+              awaitSidecarReadiness: true
+              coschedule: workspaces
+              resultExtractionMethod: termination-message
+              enforceNonfalsifiability: none
+              enableAPIFields: beta
+              runningInEnvWithInjectedSidecars: true
+              verificationNoMatchPolicy: ignore
+              enableProvenanceInStatus: true
+            refSource:
+              digest:
+                sha256: 48f50c4290f2a11ced7bb46582e33beea2753790b02ae2d2e4365deb600518f2
+              uri: /apis/tekton.dev/v1/namespaces/openshift-pipelines/task/s2i-go@f39eb0d6-4fd2-4fb0-b25c-374013ac44b1
+          steps:
+            - container: step-s2i-generate
+              imageID: 'registry.redhat.io/source-to-image/source-to-image-rhel9@sha256:73c8556c14769b473746d8bddb57d27a624a840ad1ced0c8af5aa529ac91397c'
+              name: s2i-generate
+              terminated:
+                containerID: 'cri-o://f034ed60a9fd4d7d67d3dfba140787f3ca0b7982e9f1bef85a7313604422f7ef'
+                exitCode: 0
+                finishedAt: '2026-01-10T00:39:56Z'
+                reason: Completed
+                startedAt: '2026-01-10T00:39:56Z'
+              terminationReason: Completed
+            - container: step-s2i-build
+              imageID: 'registry.redhat.io/rhel9/buildah@sha256:18453ab0a62154283aaf4c45efd7543d1c8ecca1aebae46dedc7ddc0f410b232'
+              name: s2i-build
+              terminated:
+                containerID: 'cri-o://36be1a10addc4f0c20451c690087160e42b2cf40752ba5c64bc792312cbd512f'
+                exitCode: 0
+                finishedAt: '2026-01-10T00:40:57Z'
+                message: '[{"key":"IMAGE_DIGEST","value":"sha256:ad3df30f9769f466f2e3a5a40d0abdf48c4c8c73ae8d6f09ee7d648402dfd28a","type":1},{"key":"IMAGE_URL","value":"image-registry.openshift-image-registry.svc:5000/desantischris-dev/golang-ex-demo","type":1}]'
+                reason: Completed
+                startedAt: '2026-01-10T00:39:56Z'
+              terminationReason: Completed
+          completionTime: '2026-01-10T00:40:58Z'
+          startTime: '2026-01-10T00:39:52Z'
+          podName: golang-ex-demo-qfpi7g-build-pod
+          results:
+            - name: IMAGE_DIGEST
+              type: string
+              value: 'sha256:ad3df30f9769f466f2e3a5a40d0abdf48c4c8c73ae8d6f09ee7d648402dfd28a'
+            - name: IMAGE_URL
+              type: string
+              value: 'image-registry.openshift-image-registry.svc:5000/desantischris-dev/golang-ex-demo'
+          conditions:
+            - lastTransitionTime: '2026-01-10T00:40:58Z'
+              message: All Steps have completed executing
+              reason: Succeeded
+              status: 'True'
+              type: Succeeded
+          duration: 1m 6s
+          reason: Succeeded
+      - name: kn-service-apply
+        params:
+          - name: ARGS
+            value:
+              - service
+              - apply
+              - golang-ex-demo
+              - '--image=image-registry.openshift-image-registry.svc:5000/desantischris-dev/golang-ex-demo'
+        runAfter:
+          - build
+        taskRef:
+          params:
+            - name: kind
+              value: task
+            - name: name
+              value: kn
+            - name: namespace
+              value: openshift-pipelines
+          resolver: cluster
+        status:
+          artifacts: {}
+          completionTime: '2026-01-10T00:41:03Z'
+          conditions:
+            - lastTransitionTime: '2026-01-10T00:41:03Z'
+              message: All Steps have completed executing
+              reason: Succeeded
+              status: 'True'
+              type: Succeeded
+          podName: golang-ex-demo-qfpi7g-kn-service-apply-pod
+          provenance:
+            featureFlags:
+              maxResultSize: 4096
+              awaitSidecarReadiness: true
+              coschedule: workspaces
+              resultExtractionMethod: termination-message
+              enforceNonfalsifiability: none
+              enableAPIFields: beta
+              runningInEnvWithInjectedSidecars: true
+              verificationNoMatchPolicy: ignore
+              enableProvenanceInStatus: true
+            refSource:
+              digest:
+                sha256: 3bc2d0916f204af847c67fd37ae28a60acd9541a0f9e9da9b1c509b5b4da176a
+              uri: /apis/tekton.dev/v1/namespaces/openshift-pipelines/task/kn@f89b98ce-bcce-4aaf-9e28-072bfc051bb2
+          startTime: '2026-01-10T00:40:58Z'
+          steps:
+            - container: step-kn
+              imageID: 'registry.redhat.io/openshift-serverless-1/kn-client-kn-rhel8@sha256:0fa6d15d38601f266347cdd098e80bec9893f7e6b06e84efc4a8c50b3ff3c6cc'
+              name: kn
+              terminated:
+                containerID: 'cri-o://a356f38094508c82d92e242163ee327b63c80cc35059566b712f4327a44dfa53'
+                exitCode: 0
+                finishedAt: '2026-01-10T00:41:03Z'
+                reason: Completed
+                startedAt: '2026-01-10T00:41:02Z'
+              terminationReason: Completed
+          taskSpec:
+            description: 'This Task performs operations on Knative resources (services, revisions, routes) using kn CLI'
+            params:
+              - default:
+                  - help
+                description: kn CLI arguments to run
+                name: ARGS
+                type: array
+            steps:
+              - args:
+                  - service
+                  - apply
+                  - golang-ex-demo
+                  - '--image=image-registry.openshift-image-registry.svc:5000/desantischris-dev/golang-ex-demo'
+                command:
+                  - /ko-app/kn
+                computeResources: {}
+                env:
+                  - name: HOME
+                    value: /tekton/home
+                image: 'registry.redhat.io/openshift-serverless-1/kn-client-kn-rhel8@sha256:0fa6d15d38601f266347cdd098e80bec9893f7e6b06e84efc4a8c50b3ff3c6cc'
+                name: kn
+                securityContext:
+                  runAsNonRoot: true
+                  runAsUser: 65532
+          duration: 5s
+          reason: Succeeded
+    workspaces:
+      - name: workspace
+  provenance:
+    featureFlags:
+      maxResultSize: 4096
+      awaitSidecarReadiness: true
+      coschedule: workspaces
+      resultExtractionMethod: termination-message
+      enforceNonfalsifiability: none
+      enableAPIFields: beta
+      runningInEnvWithInjectedSidecars: true
+      verificationNoMatchPolicy: ignore
+      enableProvenanceInStatus: true
+  startTime: '2026-01-10T00:39:35Z'
