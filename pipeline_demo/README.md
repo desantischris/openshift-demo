@@ -2,9 +2,20 @@
 
 This project demonstrates deploying a s2i golang builder app
 
+## Lessons Learned
+- Knative serverless scales to zero when idle – access the Route to trigger pods.
+- PipelineRuns are instances of the pipeline definition – new runs pull the latest code.
+- Sandbox limits auto-triggers so manual PipelineRun start required.
+
+## Generated Resources
+Exported YAML in `generated-yaml/`:
+- [pipeline.yaml](generated-yaml/pipeline.yaml)
+- [pipelinerun.yaml](generated-yaml/pipelinerun.yaml)
+- [knative-service.yaml](generated-yaml/knative-service.yaml)
+
 1. In the Red Hat Developer Sandbox (https://sandbox.redhat.com/), click **+ Add** in the left navigation.
    - Select **Import from Git**.
-   - **(Optional but recommended)** Fork the repo [[https://github.com/siamaksade/spring-petclinic](https://github.com/sclorg/golang-ex)](https://github.com/sclorg/golang-ex) to your GitHub account.
+   - **(Optional but recommended)** Fork the repo [[https://github.com/sclorg/golang-ex](https://github.com/sclorg/golang-ex)](https://github.com/sclorg/golang-ex) to your GitHub account.
    - Select **Go** for Builder Image.
    - Select **Build Using Pipelines** for Build Option. Ensure **s2i-go-knative** is selected for Pipeline.
    - Select **Serverless Deployment** for Resource Type.
